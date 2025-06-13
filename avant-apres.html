@@ -5,35 +5,57 @@
   <title>DartyMax – Avant / Après</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .content-block {
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      background-color: #f9f9f9;
+    }
+
+    .content-block h2 {
+      margin-top: 0;
+      color: #2b3a67;
+    }
+
+    .before-after {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    .before-after th, .before-after td {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      vertical-align: top;
+    }
+
+    .highlight {
+      color: #d62828;
+      font-weight: bold;
+    }
+  </style>
 </head>
 
 <body>
   <header class="sub-hero change">
     <h1>🔄 Avant / Après&nbsp;: ce qui change vraiment</h1>
-    <p>Enfin une solution pour les produits déjà en panne… et sans facture !</p>
+    <p>Trois situations fréquentes, trois solutions concrètes.</p>
   </header>
 
   <main>
-    <!-- Texte uniquement -->
-    <section class="content">
-      <p>
-        🔄 <strong>AVANT</strong> : lorsqu’un client voulait s’abonner à
-        DartyMax alors que son produit était déjà en panne, nous n’avions
-        <em>aucune solution</em> à lui proposer.<br />
-        📄 <strong>AVANT</strong> : sans facture, la prise en charge était
-        impossible ou menait souvent à des litiges.<br /><br />
-        🚀 <strong>MAINTENANT</strong> : grâce à la
-        <strong>prise en charge Hors Garantie à prix promo</strong>, nous
-        pouvons faire souscrire le client <em>et</em> réparer immédiatement son
-        appareil.<br />
-        💸 <strong>MAINTENANT</strong> : même sans facture, nous appliquons un
-        <strong>forfait HG très remisé</strong>. Résultat : satisfaction
-        client, zéro litige !
-      </p>
-    </section>
 
-    <!-- Tableau comparatif -->
-    <section class="content">
+    <!-- Cas 1 : Client NON abonné -->
+    <section class="content-block">
+      <h2>👤 Cas 1 : Client NON abonné à DartyMax</h2>
+      <p><strong>Problème typique :</strong> le client veut souscrire DartyMax, mais son produit est déjà en panne.</p>
+
+      <p>
+        🔄 <span class="highlight">AVANT</span> : Aucune solution possible. La souscription était bloquée, le devis était élevé et le client repartait mécontent.<br />
+        🚀 <span class="highlight">MAINTENANT</span> : On propose un <strong>forfait Hors Garantie promotionnel</strong> + la <strong>souscription immédiate à DartyMax</strong>. Le client repart avec son produit réparé et protégé !
+      </p>
+
       <table class="before-after">
         <thead>
           <tr>
@@ -44,23 +66,74 @@
         <tbody>
           <tr>
             <td>
-              Client souhaite DartyMax mais
-              <strong>produit déjà en panne</strong> → ❌ Pas de solution, devis
-              élevé.
+              Client NON abonné avec produit en panne → ❌ <strong>Pas de solution</strong>, devis élevé.
             </td>
             <td>
-              Client souhaite DartyMax avec produit déjà en panne → ✅
-              <strong>Forfait promo HG</strong> + souscription DartyMax.
+              ✅ <strong>Forfait HG promo</strong> + souscription immédiate à DartyMax. Satisfaction immédiate.
             </td>
           </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Cas 2 : Client DÉJÀ abonné sans facture -->
+    <section class="content-block">
+      <h2>✅ Cas 2 : Client DÉJÀ abonné à DartyMax (sans facture)</h2>
+      <p><strong>Problème typique :</strong> le client est abonné, mais n’a plus de facture.</p>
+
+      <p>
+        📄 <span class="highlight">AVANT</span> : Sans facture, la réparation était refusée ou entraînait des litiges.<br />
+        💸 <span class="highlight">MAINTENANT</span> : On applique un <strong>forfait HG très remisé</strong>, même sans facture. Le client est dépanné rapidement.<br />
+        ⚠️ Attention : la réparation est <strong>en dehors du régime DartyMax</strong>, car le produit n’est pas éligible sans justificatif.
+      </p>
+
+      <table class="before-after">
+        <thead>
+          <tr>
+            <th>📄 AVANT</th>
+            <th>💸 MAINTENANT</th>
+          </tr>
+        </thead>
+        <tbody>
           <tr>
             <td>
-              <strong>Pas de facture</strong> → refus, solutions détournées,
-              litiges potentiels.
+              Client déjà abonné sans facture → ❌ <strong>Refus</strong>, insatisfaction, solutions détournées.
             </td>
             <td>
-              Pas de facture → ✅
-              <strong>Forfait HG hyper remisé</strong>, transparent et accepté.
+              ✅ <strong>Forfait remisé HG</strong> appliqué. Pas de litige.<br />
+              ⚠️ Réparation hors DartyMax (pas couvert par le contrat).
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Cas 3 : Client DÉJÀ abonné sans appel CheckUp -->
+    <section class="content-block">
+      <h2>📞 Cas 3 : Client DÉJÀ abonné à DartyMax (sans appel CheckUp)</h2>
+      <p><strong>Problème typique :</strong> le client est abonné, mais n’a pas réalisé son appel CheckUp, donc ses produits ne sont pas sous statut "Maintenance".</p>
+
+      <p>
+        📄 <span class="highlight">AVANT</span> : Sans le statut « sous maintenance », la réparation était refusée ou entraînait des litiges.<br />
+        💸 <span class="highlight">MAINTENANT</span> : On applique un <strong>forfait HG très remisé</strong>, même sans statut maintenance. Le client est dépanné rapidement.<br />
+        ⚠️ Attention : la réparation est <strong>hors du régime DartyMax</strong>, car le produit n’est pas éligible si l’appel CheckUp n’a pas été réalisé.
+      </p>
+
+      <table class="before-after">
+        <thead>
+          <tr>
+            <th>📄 AVANT</th>
+            <th>💸 MAINTENANT</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Client déjà abonné sans appel CheckUp → ❌ <strong>Pas de statut maintenance</strong>, refus de prise en charge.
+            </td>
+            <td>
+              ✅ <strong>Forfait remisé HG</strong> appliqué. Le client est dépanné rapidement.<br />
+              ⚠️ Réparation hors DartyMax.
             </td>
           </tr>
         </tbody>
