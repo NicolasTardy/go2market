@@ -5,6 +5,42 @@
   <title>DartyMax – Avantages client</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    .gift-checkup {
+      background: #fff7e6;
+      border: 2px dashed #f39c12;
+      padding: 1.5rem;
+      margin: 2rem auto;
+      border-radius: 1rem;
+      text-align: center;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #8e4b00;
+      max-width: 750px;
+      position: relative;
+    }
+
+    .gift-checkup::before {
+      content: "🎁 BONUS CHECKUP";
+      position: absolute;
+      top: -1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f39c12;
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: bold;
+    }
+
+    .gift-footnote {
+      font-size: 0.85rem;
+      color: #777;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+  </style>
 </head>
 
 <body>
@@ -24,32 +60,28 @@
     </section>
 
     <section class="content grid3">
-      <!-- Bénéfice 1 -->
+      <!-- Bénéfice 1 mis à jour -->
       <article>
         <h2>💸 Économie immédiate</h2>
         <p>
-          Grâce au <strong>forfait promo HG</strong>, le client économise
-          jusqu’à <span class="highlight">−50&nbsp;€</span> <strong>et les pièces détachées offertes sur certaines offres&nbsp;!</strong> dès la première intervention.
+          Grâce aux <strong>différents forfaits à prix promo</strong> sur les réparations Hors Garantie,
+          nos clients économisent <strong>plus de 50 €</strong> en plus des pièces détachées qui sont offertes sur certaines offres !
+          Et ce, dès la première intervention.<br /><br />
+          Cela signifie que nos clients DartyMax <strong>qui n’ont pas de facture produit</strong>
+          ou <strong>qui n’ont pas encore fait l’appel CheckUp</strong> se verront toujours proposer une solution.<br /><br />
+          <strong>Mais n’oubliez pas :</strong> le plus sage reste de bien expliquer à nos clients
+          <em>les règles d’or</em> pour que les produits soient totalement pris en charge sous le régime de DartyMax.
         </p>
       </article>
+    </section>
 
-      <!-- Bénéfice 2 -->
-      <article>
-        <h2>🛡️ Protection longue durée</h2>
-        <p>
-          L’abonnement DartyMax couvre <em>tous</em> les appareils éligibles du
-          foyer, sans limite de nombre de pannes ni de pièces détachées.
-        </p>
-      </article>
-
-      <!-- Bénéfice 3 -->
-      <article>
-        <h2>⚡ Simplicité totale</h2>
-        <p>
-          1 seule souscription, 1 seule facture et les <strong>CGS
-          DartyMax</strong> garantissent un service transparent et rapide.
-        </p>
-      </article>
+    <!-- 🎁 Encadré promo carte cadeau -->
+    <section class="content">
+      <div class="gift-checkup">
+        Le client qui réalise son appel CheckUp dans les <strong>30 jours suivant son abonnement</strong> reçoit une<br />
+        <strong>💳 carte cadeau de 15 €</strong> pour acheter des produits d’entretien pour ses appareils !
+      </div>
+      <p class="gift-footnote">* Offre valable jusqu’au 31 octobre 2025</p>
     </section>
 
     <!-- Navigation -->

@@ -16,7 +16,7 @@
   <main>
     <section class="content">
       <p class="voiceover">
-        ❓ C’est le moment de valider vos acquis ! Répondez aux 5 questions
+        ❓ C’est le moment de valider vos acquis ! Répondez aux 3 questions
         suivantes ; 80 % de bonnes réponses et vous devenez officiellement
         « Expert DartyMax Promo HG » !
       </p>
@@ -29,7 +29,7 @@
         <fieldset>
           <legend>1️⃣ Un produit déjà en panne au moment de la souscription…</legend>
           <label><input type="radio" name="q1" value="A" /> …est pris en charge par DartyMax.</label><br />
-          <label><input type="radio" name="q1" value="B" /> …est pris en charge en Hors Garantie promo.</label><br />
+          <label><input type="radio" name="q1" value="B" /> …est pris en charge grâce à une super promotion sur le tarif Hors Garantie.</label><br />
           <label><input type="radio" name="q1" value="C" /> …n’est jamais réparable.</label>
         </fieldset>
 
@@ -37,7 +37,7 @@
         <fieldset>
           <legend>2️⃣ S’il n’y a pas de facture, le client…</legend>
           <label><input type="radio" name="q2" value="A" /> …doit la retrouver avant toute prise en charge.</label><br />
-          <label><input type="radio" name="q2" value="B" /> …bénéficie d’un forfait HG hyper avantageux.</label><br />
+          <label><input type="radio" name="q2" value="B" /> …bénéficie d’un tarif forfaitaire à prix ultra remisé ! Et sera réparé en Hors Garantie.</label><br />
           <label><input type="radio" name="q2" value="C" /> …ne peut plus souscrire DartyMax.</label>
         </fieldset>
 
@@ -45,24 +45,8 @@
         <fieldset>
           <legend>3️⃣ Les CGS DartyMax doivent être…</legend>
           <label><input type="radio" name="q3" value="A" /> …suivies uniquement par le SAV.</label><br />
-          <label><input type="radio" name="q3" value="B" /> …appliquées par toutes les équipes.</label><br />
+          <label><input type="radio" name="q3" value="B" /> …expliquées aux clients et appliquées par toutes les équipes.</label><br />
           <label><input type="radio" name="q3" value="C" /> …optionnelles pour les clients en ligne.</label>
-        </fieldset>
-
-        <!-- Q4 -->
-        <fieldset>
-          <legend>4️⃣ Quel avantage immédiat pour le client ?</legend>
-          <label><input type="radio" name="q4" value="A" /> Une réparation moins chère grâce au tarif promo.</label><br />
-          <label><input type="radio" name="q4" value="B" /> Une extension de garantie constructeur.</label><br />
-          <label><input type="radio" name="q4" value="C" /> Aucun ; c’est juste administratif.</label>
-        </fieldset>
-
-        <!-- Q5 -->
-        <fieldset>
-          <legend>5️⃣ Quelle action BOOSTE vos primes ?</legend>
-          <label><input type="radio" name="q5" value="A" /> Vendre un câble HDMI.</label><br />
-          <label><input type="radio" name="q5" value="B" /> Convertir une panne HG en offre promo + DartyMax.</label><br />
-          <label><input type="radio" name="q5" value="C" /> Remplir un questionnaire papier.</label>
         </fieldset>
 
         <button type="button" class="btn" onclick="gradeQuiz()">Valider mes réponses</button>
@@ -84,7 +68,11 @@
 
   <script src="assets/js/main.js"></script>
   <script>
-    const correctAnswers = { q1: 'B', q2: 'B', q3: 'B', q4: 'A', q5: 'B' };
+    const correctAnswers = {
+      q1: 'B',
+      q2: 'B',
+      q3: 'B'
+    };
 
     function gradeQuiz() {
       const form = document.getElementById('quizForm');

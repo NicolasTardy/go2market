@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Focus CheckUp & Nouveautés</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+      padding: 2rem;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin-bottom: 1rem;
+    }
+
+    .highlight {
+      background: #e9f5ff;
+      border-left: 5px solid #3498db;
+      padding: 1rem;
+      margin: 1.5rem 0;
+      border-radius: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      font-size: 1rem;
+    }
+
+    ul li {
+      margin: 0.75rem 0;
+      padding-left: 1.8rem;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    ul li::before {
+      content: "🔹";
+      position: absolute;
+      left: 0;
+    }
+
+    .gift-box {
+      background: #fff7e6;
+      border: 2px dashed #f39c12;
+      padding: 1.5rem;
+      margin: 2rem 0 1rem;
+      border-radius: 1rem;
+      text-align: center;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #8e4b00;
+      position: relative;
+    }
+
+    .gift-box::before {
+      content: "🎁 BONUS EXCLUSIF 🎁";
+      position: absolute;
+      top: -1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f39c12;
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: bold;
+    }
+
+    .footnote {
+      font-size: 0.85rem;
+      color: #777;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 2.5rem;
+      text-decoration: none;
+      color: #3498db;
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>📞 Focus sur l’appel CheckUp & Nouveautés</h1>
+
+    <div class="highlight">
+      <p><strong>📹 Un rendez-vous visio de 20 à 25 minutes</strong></p>
+      <p><strong>⭐ Très apprécié par nos clients</strong><br />
+      Note de satisfaction : <strong>4,8 / 5</strong></p>
+    </div>
+
+    <h2>🔍 Rappel des objectifs du rendez-vous :</h2>
+    <ul>
+      <li>🧼 <strong>Aider nos clients à entretenir leurs appareils</strong><br />
+        (bons gestes, prévention des pannes) – <em>Plus les appareils sont entretenus, moins ils tombent en panne !</em>
+      </li>
+      <li>💡 <strong>Les conseiller sur l’usage, les fonctionnalités ou les besoins futurs</strong><br />
+        <em>C’est étonnant de voir le nombre de clients qui découvrent de nouvelles fonctions même après 3 ans d’utilisation !</em>
+      </li>
+      <li>🔄 <strong>Mettre à jour leur compte et leur espace client</strong><br />
+        <em>Un espace client à jour permet une meilleure prise en charge en cas de problème !</em>
+      </li>
+    </ul>
+
+    <div class="gift-box">
+      Le client qui réalise son appel CheckUp dans les <strong>30 jours suivant son abonnement</strong> reçoit une<br />
+      <strong>💳 carte cadeau de 15 €</strong><br />
+      pour acheter des produits d’entretien pour ses appareils !
+    </div>
+
+    <p class="footnote">* Offre valable jusqu’au 31 octobre 2025</p>
+
+    <a class="back-link" href="index.html">← Retour à l'accueil</a>
+  </div>
+</body>
+</html>
