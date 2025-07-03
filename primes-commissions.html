@@ -2,67 +2,161 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>DartyMax – Primes &amp; commissions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DartyMax – Primes & Commissions</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    :root {
+      --darty-blue: #0046be;
+      --fnac-yellow: #f3c300;
+      --light-bg: #f9f9f9;
+      --text-color: #222;
+      --highlight-blue: #e9f5ff;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--light-bg);
+      color: var(--text-color);
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--darty-blue);
+      margin-bottom: 1rem;
+    }
+
+    p.subtext {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .highlight {
+      background: var(--highlight-blue);
+      border-left: 6px solid #3498db;
+      padding: 1.2rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+
+    table.prime-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    table.prime-table th,
+    table.prime-table td {
+      border: 1px solid #ddd;
+      padding: 1rem;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    table.prime-table thead th {
+      background-color: #f0f4f8;
+      color: #2c3e50;
+    }
+
+    .highlight-box {
+      background: #fffbe6;
+      border-left: 6px solid #f3c300;
+      padding: 1.2rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1.05rem;
+    }
+
+    .highlight-box strong {
+      color: #8e4b00;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 3rem;
+      text-decoration: none;
+      background: var(--darty-blue);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .back-link:hover {
+      background-color: #003a9b;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 2rem 1rem;
+      color: #888;
+      background: #fff;
+      border-top: 1px solid #ddd;
+    }
+
+    footer a {
+      color: var(--darty-blue);
+      text-decoration: underline;
+    }
+  </style>
 </head>
 
 <body>
-  <header class="sub-hero incentives">
-    <h1>🏆 Vos primes &amp; commissions</h1>
-    <p>Plus on aide, plus on gagne&nbsp;!</p>
-  </header>
+  <div class="container">
+    <h1>🏆 Vos primes & commissions</h1>
+    <p class="subtext">Plus on aide, plus on gagne !</p>
 
-  <main>
-    <section class="content">
-      <p class="voiceover">
-        🏆 La combinaison « Souscription + Réparation HG promo » augmente votre
-        prime de <strong>+2 €</strong> par rapport à la prime actuelle. Plus on
-        aide le client, plus on gagne !
-      </p>
-    </section>
+    <div class="highlight">
+      🏆 La combinaison <strong>« Souscription + Réparation HG promo »</strong> augmente votre prime de <strong>+2 €</strong> par rapport à la prime actuelle.
+    </div>
 
-    <section class="content">
-      <table class="prime-table">
-        <thead>
-          <tr>
-            <th>Action réalisée</th>
-            <th>Prime vendeur</th>
-            <th>Commission magasin</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Souscription + Réparation HG promo</td>
-            <td><strong>+2 € vs la prime actuelle</strong></td>
-            <td>(Voir CDG – ne peut pas être communiqué)</td>
-          </tr>
-        </tbody>
-      </table>
+    <table class="prime-table">
+      <thead>
+        <tr>
+          <th>Action réalisée</th>
+          <th>Prime vendeur</th>
+          <th>Commission magasin</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Souscription + Réparation HG promo</td>
+          <td><strong>+2 € vs la prime actuelle</strong></td>
+          <td>(Voir CDG – ne peut pas être communiqué)</td>
+        </tr>
+      </tbody>
+    </table>
 
-      <div class="highlight-box">
-        <p>
-          📈 <strong>Objectif magasin :</strong> <u>100 % des produits en panne
-          avant la souscription à DartyMax</u> doivent faire l'objet d'une présentation de la
-          promo HG/DMax.<br />
-          ✅ Suivez votre progression chaque semaine dans l’onglet
-          <em>Reporting</em>.
-        </p>
-      </div>
-    </section>
+    <div class="highlight-box">
+      📈 <strong>Il faut présenter la promo HG/DMax dans 100% des cas où les produits sont en panne avant la souscription à DartyMax</strong>.
+      <br /><br />
+      ✅ Suivez votre progression chaque semaine dans l’onglet <em>Reporting</em>.
+    </div>
 
-    <!-- Navigation -->
-    <nav class="pager">
-      <a href="benefices-client.html">← Avantages client</a>
-      <a href="outils.html">Outils &amp; ressources →</a><br />
-      <a href="index.html">🏠 Retour à l’accueil</a>
-    </nav>
-  </main>
+    <a class="back-link" href="index.html">← Retour à l’accueil</a>
+  </div>
 
   <footer>
     © 2025 Darty – Programme DartyMax | <a href="https://intranet.darty">Intranet</a>
   </footer>
-
-  <script src="assets/js/main.js"></script>
 </body>
 </html>

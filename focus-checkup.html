@@ -2,51 +2,65 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Focus CheckUp & Nouveautés</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
+    :root {
+      --darty-blue: #0046be;
+      --fnac-yellow: #f3c300;
+      --light-bg: #f9f9f9;
+      --text-color: #222;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f5f7fa;
-      color: #333;
-      padding: 2rem;
+      margin: 0;
+      background: var(--light-bg);
+      color: var(--text-color);
     }
 
     .container {
       max-width: 850px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 2rem;
+      margin: 3rem auto;
+      background: white;
+      padding: 2.5rem;
       border-radius: 1rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     }
 
     h1 {
       text-align: center;
-      font-size: 2.2rem;
-      color: #2c3e50;
+      font-size: 2rem;
+      color: var(--darty-blue);
       margin-bottom: 1rem;
     }
 
     .highlight {
       background: #e9f5ff;
-      border-left: 5px solid #3498db;
-      padding: 1rem;
-      margin: 1.5rem 0;
-      border-radius: 0.5rem;
-      font-size: 1.1rem;
+      border-left: 6px solid #3498db;
+      padding: 1.2rem 1.5rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+      font-size: 1.05rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      color: #2c3e50;
     }
 
     ul {
       list-style: none;
       padding-left: 0;
-      font-size: 1rem;
+      margin: 1.2rem 0;
     }
 
     ul li {
-      margin: 0.75rem 0;
-      padding-left: 1.8rem;
+      margin-bottom: 1.1rem;
+      padding-left: 2rem;
       position: relative;
       line-height: 1.5;
     }
@@ -55,23 +69,22 @@
       content: "🔹";
       position: absolute;
       left: 0;
+      font-size: 1.1rem;
     }
 
-    .gift-box {
-      background: #fff7e6;
+    .bonus-box {
+      background: linear-gradient(145deg, #fff7e0, #fff2cc);
       border: 2px dashed #f39c12;
-      padding: 1.5rem;
-      margin: 2rem 0 1rem;
-      border-radius: 1rem;
+      border-radius: 16px;
+      padding: 2rem;
       text-align: center;
-      font-size: 1.15rem;
-      font-weight: 500;
-      color: #8e4b00;
+      margin-top: 2.5rem;
       position: relative;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
     }
 
-    .gift-box::before {
-      content: "🎁 BONUS EXCLUSIF 🎁";
+    .bonus-box::before {
+      content: "🎁 BONUS FIDÉLITÉ";
       position: absolute;
       top: -1.2rem;
       left: 50%;
@@ -84,24 +97,43 @@
       font-weight: bold;
     }
 
+    .bonus-box strong {
+      font-size: 1.3rem;
+      color: #8e4b00;
+    }
+
+    .bonus-box .amount {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #c96a00;
+    }
+
     .footnote {
+      text-align: center;
       font-size: 0.85rem;
       color: #777;
-      text-align: center;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
     }
 
     .back-link {
       display: block;
       text-align: center;
-      margin-top: 2.5rem;
+      margin-top: 3rem;
       text-decoration: none;
-      color: #3498db;
+      background: var(--darty-blue);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
       font-weight: 500;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .back-link:hover {
-      text-decoration: underline;
+      background-color: #003a9b;
     }
   </style>
 </head>
@@ -116,23 +148,18 @@
       Note de satisfaction : <strong>4,8 / 5</strong></p>
     </div>
 
-    <h2>🔍 Rappel des objectifs du rendez-vous :</h2>
+    <h2>🔍 Objectifs du rendez-vous CheckUp</h2>
     <ul>
-      <li>🧼 <strong>Aider nos clients à entretenir leurs appareils</strong><br />
-        (bons gestes, prévention des pannes) – <em>Plus les appareils sont entretenus, moins ils tombent en panne !</em>
-      </li>
-      <li>💡 <strong>Les conseiller sur l’usage, les fonctionnalités ou les besoins futurs</strong><br />
-        <em>C’est étonnant de voir le nombre de clients qui découvrent de nouvelles fonctions même après 3 ans d’utilisation !</em>
-      </li>
-      <li>🔄 <strong>Mettre à jour leur compte et leur espace client</strong><br />
-        <em>Un espace client à jour permet une meilleure prise en charge en cas de problème !</em>
-      </li>
+      <li>🧼 <strong>Entretenir les appareils</strong> (bons gestes, prévention des pannes)<br /><em>Un appareil entretenu = un appareil plus fiable</em></li>
+      <li>💡 <strong>Conseiller l’usage et découvrir des fonctionnalités</strong><br /><em>Certains clients découvrent encore des options après 3 ans !</em></li>
+      <li>🔄 <strong>Mettre à jour le compte client et son espace personnel</strong><br /><em>Facilite la gestion SAV en cas de problème</em></li>
     </ul>
 
-    <div class="gift-box">
-      Le client qui réalise son appel CheckUp dans les <strong>30 jours suivant son abonnement</strong> reçoit une<br />
-      <strong>💳 carte cadeau de 15 €</strong><br />
-      pour acheter des produits d’entretien pour ses appareils !
+    <div class="bonus-box">
+      Le client qui réalise son appel CheckUp dans les<br />
+      <strong>30 jours suivant son abonnement</strong> reçoit une<br />
+      <span class="amount">💳 Carte cadeau de 15 €</span><br />
+      valable pour l’achat de produits d’entretien Darty.
     </div>
 
     <p class="footnote">* Offre valable jusqu’au 31 octobre 2025</p>

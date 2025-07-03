@@ -2,148 +2,196 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DartyMax – Avant / Après</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
-    .content-block {
-      border: 2px solid #ccc;
-      border-radius: 12px;
+    :root {
+      --darty-blue: #0046be;
+      --fnac-yellow: #f3c300;
+      --light-bg: #f9f9f9;
+      --text-color: #222;
+      --red: #d62828;
+      --green: #007f5f;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--light-bg);
+      color: var(--text-color);
+    }
+
+    header.sub-hero {
+      padding: 3rem 1rem 1rem;
+      text-align: center;
+      background: white;
+      border-bottom: 2px solid var(--darty-blue);
+    }
+
+    header.sub-hero h1 {
+      font-size: 2rem;
+      color: var(--darty-blue);
+    }
+
+    header.sub-hero p {
+      font-size: 1.1rem;
+    }
+
+    .intro-note {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #fffce8;
+      border-left: 6px solid var(--fnac-yellow);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .intro-note p {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .case-block {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      background: #fff;
       padding: 2rem;
-      margin: 2rem 0;
-      background-color: #f9f9f9;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     }
 
-    .content-block h2 {
-      margin-top: 0;
-      color: #2b3a67;
+    .case-block h2 {
+      color: var(--darty-blue);
     }
 
-    .before-after {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
+    .comparison {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
     }
 
-    .before-after th, .before-after td {
-      border: 1px solid #ccc;
-      padding: 1rem;
-      vertical-align: top;
+    .before, .after {
+      flex: 1 1 300px;
+      padding: 1.2rem;
+      border-radius: 10px;
+      background: #fefefe;
+      border-left: 6px solid;
+    }
+
+    .before {
+      border-color: var(--red);
+    }
+
+    .after {
+      border-color: var(--green);
+    }
+
+    .before p, .after p {
+      margin: 0;
     }
 
     .highlight {
-      color: #d62828;
       font-weight: bold;
+    }
+
+    nav.pager {
+      text-align: center;
+      margin: 3rem 0 2rem;
+    }
+
+    nav.pager a {
+      display: inline-block;
+      padding: 1rem 1.5rem;
+      font-weight: 500;
+      background-color: var(--darty-blue);
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    nav.pager a:hover {
+      background-color: #003a9b;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 2rem 1rem;
+      color: #888;
+      background: #fff;
+      border-top: 1px solid #ddd;
+    }
+
+    footer a {
+      color: var(--darty-blue);
+      text-decoration: underline;
     }
   </style>
 </head>
 
 <body>
-  <header class="sub-hero change">
-    <h1>🔄 Avant / Après&nbsp;: ce qui change vraiment</h1>
-    <p>Trois situations fréquentes, trois solutions concrètes.</p>
+  <header class="sub-hero">
+    <h1>🔄 Avant / Après : ce qui change vraiment</h1>
+    <p>3 situations fréquentes, 3 solutions concrètes.</p>
   </header>
+
+  <div class="intro-note">
+    <p>🎯 <strong>Bonne nouvelle :</strong> des <strong>promotions Hors Garantie</strong> sont désormais disponibles pour les clients qui veulent s’abonner à DartyMax, même si leur produit est déjà en panne ou non conforme aux CGS. Objectif : dépanner, satisfaire, et fidéliser !</p>
+  </div>
 
   <main>
 
-    <!-- Cas 1 : Client NON abonné -->
-    <section class="content-block">
-      <h2>👤 Cas 1 : Client NON abonné à DartyMax</h2>
-      <p><strong>Problème typique :</strong> le client veut souscrire DartyMax, mais son produit est déjà en panne.</p>
+    <!-- Cas 1 -->
+    <section class="case-block">
+      <h2>👤 Cas 1 : Client NON abonné avec produit en panne</h2>
+      <p><strong>Situation typique :</strong> le client veut s’abonner, mais son produit est déjà en panne.</p>
 
-      <p>
-        🔄 <span class="highlight">AVANT</span> : Aucune solution possible. La souscription était bloquée, le devis était élevé et le client repartait mécontent.<br />
-        🚀 <span class="highlight">MAINTENANT</span> : On propose un <strong>forfait Hors Garantie promotionnel</strong> + la <strong>souscription immédiate à DartyMax</strong>. Le client repart avec son produit réparé et protégé !
-      </p>
-
-      <table class="before-after">
-        <thead>
-          <tr>
-            <th>🕑 AVANT</th>
-            <th>🚀 MAINTENANT</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              Client NON abonné avec produit en panne → ❌ <strong>Pas de solution</strong>, devis élevé.
-            </td>
-            <td>
-              ✅ <strong>Forfait HG promo</strong> + souscription immédiate à DartyMax. Satisfaction immédiate.
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="comparison">
+        <div class="before">
+          <p>❌ <span class="highlight">AVANT</span> : Pas de solution. Souscription bloquée, devis élevé. Le client repart mécontent.</p>
+        </div>
+        <div class="after">
+          <p>✅ <span class="highlight">MAINTENANT</span> : Forfait Hors Garantie promo + souscription immédiate. Le client repart avec son produit réparé et protégé.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Cas 2 : Client DÉJÀ abonné sans facture -->
-    <section class="content-block">
-      <h2>✅ Cas 2 : Client DÉJÀ abonné à DartyMax (sans facture)</h2>
-      <p><strong>Problème typique :</strong> le client est abonné, mais n’a plus de facture.</p>
+    <!-- Cas 2 -->
+    <section class="case-block">
+      <h2>📄 Cas 2 : Client DartyMax sans facture</h2>
+      <p><strong>Situation typique :</strong> le client est abonné, mais ne retrouve pas la facture.</p>
 
-      <p>
-        📄 <span class="highlight">AVANT</span> : Sans facture, la réparation était refusée ou entraînait des litiges.<br />
-        💸 <span class="highlight">MAINTENANT</span> : On applique un <strong>forfait HG très remisé</strong>, même sans facture. Le client est dépanné rapidement.<br />
-        ⚠️ Attention : la réparation est <strong>en dehors du régime DartyMax</strong>, car le produit n’est pas éligible sans justificatif.
-      </p>
-
-      <table class="before-after">
-        <thead>
-          <tr>
-            <th>📄 AVANT</th>
-            <th>💸 MAINTENANT</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              Client déjà abonné sans facture → ❌ <strong>Refus</strong>, insatisfaction, solutions détournées.
-            </td>
-            <td>
-              ✅ <strong>Forfait remisé HG</strong> appliqué. Pas de litige.<br />
-              ⚠️ Réparation hors DartyMax (pas couvert par le contrat).
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="comparison">
+        <div class="before">
+          <p>❌ <span class="highlight">AVANT</span> : Réparation refusée. Litige ou insatisfaction.</p>
+        </div>
+        <div class="after">
+          <p>✅ <span class="highlight">MAINTENANT</span> : Forfait HG très remisé accepté, même sans facture. Réparation rapide hors DartyMax.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Cas 3 : Client DÉJÀ abonné sans appel CheckUp -->
-    <section class="content-block">
-      <h2>📞 Cas 3 : Client DÉJÀ abonné à DartyMax (sans appel CheckUp)</h2>
-      <p><strong>Problème typique :</strong> le client est abonné, mais n’a pas réalisé son appel CheckUp, donc ses produits ne sont pas sous statut "Maintenance".</p>
+    <!-- Cas 3 -->
+    <section class="case-block">
+      <h2>📞 Cas 3 : Client DartyMax sans appel CheckUp</h2>
+      <p><strong>Situation typique :</strong> le client a oublié son appel CheckUp, ses produits ne sont pas "sous maintenance".</p>
 
-      <p>
-        📄 <span class="highlight">AVANT</span> : Sans le statut « sous maintenance », la réparation était refusée ou entraînait des litiges.<br />
-        💸 <span class="highlight">MAINTENANT</span> : On applique un <strong>forfait HG très remisé</strong>, même sans statut maintenance. Le client est dépanné rapidement.<br />
-        ⚠️ Attention : la réparation est <strong>hors du régime DartyMax</strong>, car le produit n’est pas éligible si l’appel CheckUp n’a pas été réalisé.
-      </p>
-
-      <table class="before-after">
-        <thead>
-          <tr>
-            <th>📄 AVANT</th>
-            <th>💸 MAINTENANT</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              Client déjà abonné sans appel CheckUp → ❌ <strong>Pas de statut maintenance</strong>, refus de prise en charge.
-            </td>
-            <td>
-              ✅ <strong>Forfait remisé HG</strong> appliqué. Le client est dépanné rapidement.<br />
-              ⚠️ Réparation hors DartyMax.
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="comparison">
+        <div class="before">
+          <p>❌ <span class="highlight">AVANT</span> : Pas de statut "maintenance", donc refus de prise en charge ou litige.</p>
+        </div>
+        <div class="after">
+          <p>✅ <span class="highlight">MAINTENANT</span> : Forfait HG remisé même sans statut. Le client est dépanné rapidement, en dehors de DartyMax.</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Navigation -->
     <nav class="pager">
-      <a href="regles.html">← Les 5 règles</a>
-      <a href="tarifs.html">Tarifs promo →</a><br />
       <a href="index.html">🏠 Retour à l’accueil</a>
     </nav>
   </main>

@@ -2,37 +2,70 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>DartyMax – Vos rôles &amp; parcours client</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DartyMax – Vos rôles & parcours client</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
+    :root {
+      --darty-blue: #0046be;
+      --fnac-yellow: #f3c300;
+      --light-bg: #f9f9f9;
+      --text-color: #222;
+    }
+
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #f5f7fa;
-      color: #2b3a67;
       margin: 0;
-      padding: 0;
+      background: var(--light-bg);
+      color: var(--text-color);
     }
 
-    header.sub-hero.roles {
-      background-color: #ffffff;
-      padding: 2rem 1rem;
+    header.sub-hero {
+      padding: 3rem 1rem 1rem;
       text-align: center;
-      border-bottom: 3px solid #ccc;
+      background: white;
+      border-bottom: 2px solid var(--darty-blue);
     }
 
-    header h1, header p {
-      margin: 0;
-      color: #000000;
+    header.sub-hero h1 {
+      font-size: 2.2rem;
+      color: var(--darty-blue);
     }
 
-    header h1 {
-      font-size: 2rem;
+    header.sub-hero p {
+      font-size: 1.1rem;
+      color: #555;
     }
 
-    header p {
-      font-size: 1.2rem;
-      margin-top: 0.5rem;
+    .rules-block {
+      background: #fffce8;
+      border-left: 6px solid var(--fnac-yellow);
+      margin: 2rem auto;
+      max-width: 900px;
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .rules-block h2 {
+      margin-top: 0;
+      font-size: 1.4rem;
+      color: #111;
+    }
+
+    .rules-block ul {
+      padding-left: 1.2rem;
+      margin: 1rem 0;
+    }
+
+    .rules-block li {
+      margin-bottom: 0.8rem;
+    }
+
+    .rules-block p {
+      margin-top: 1.5rem;
+      font-weight: 500;
     }
 
     main {
@@ -51,20 +84,20 @@
       background-color: #ffffff;
       border-radius: 12px;
       padding: 1.5rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
     article h2 {
       margin-top: 0;
-      font-size: 1.4rem;
-      color: #1f4e79;
+      font-size: 1.5rem;
+      color: var(--darty-blue);
     }
 
     article h3 {
       margin-top: 2rem;
       font-size: 1.2rem;
-      color: #2b3a67;
-      border-bottom: 1px solid #d0d0d0;
+      color: #333;
+      border-bottom: 1px solid #e0e0e0;
       padding-bottom: 0.3rem;
     }
 
@@ -79,36 +112,57 @@
 
     nav.pager {
       text-align: center;
-      margin-top: 3rem;
+      margin: 3rem 0 2rem;
     }
 
     nav.pager a {
-      margin: 0 1rem;
+      display: inline-block;
+      padding: 1rem 1.5rem;
+      font-weight: 500;
+      background-color: var(--darty-blue);
+      color: white;
+      border-radius: 8px;
       text-decoration: none;
-      color: #2b3a67;
-      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    nav.pager a:hover {
+      background-color: #003a9b;
     }
 
     footer {
-      background-color: #ececec;
       text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
       font-size: 0.9rem;
+      padding: 2rem 1rem;
+      color: #888;
+      background: #fff;
+      border-top: 1px solid #ddd;
     }
 
     footer a {
-      color: #2b3a67;
+      color: var(--darty-blue);
       text-decoration: underline;
     }
   </style>
 </head>
 
 <body>
-  <header class="sub-hero roles">
+  <header class="sub-hero">
     <h1>🤝 Vos rôles clés</h1>
     <p>Adapter son discours selon le statut du client</p>
   </header>
+
+  <section class="rules-block">
+    <h2>⭐ Les 5 règles d’or à suivre</h2>
+    <ul>
+      <li>Présenter les CGS au client qui s’abonne et bien préciser qu’un produit déjà en panne avant la souscription ne pourra pas être pris en charge par DartyMax.</li>
+      <li>Présenter la promotion exceptionnelle sur la réparation Hors Garantie du produit déjà en panne si le client s’abonne à DartyMax.</li>
+      <li>Expliquer l’importance de l’appel CheckUp pour assurer le statut “sous maintenance” de ses produits et la qualité du service dans la durée.</li>
+      <li>Rappeler l’importance d’avoir les factures pour tout produit acheté hors Fnac ou Darty.</li>
+      <li>Valoriser la générosité du programme DartyMax : réparations incluses, forfaits remisés, zéro paperasse, tranquillité totale.</li>
+    </ul>
+    <p>✅ Appliquer ces 5 règles, c’est garantir la clarté, la confiance et la satisfaction du client, même dans les situations complexes.</p>
+  </section>
 
   <main>
     <section class="stacked">
@@ -123,11 +177,11 @@
           <li>Abonner le client et <strong>traiter la prise en charge HG (atelier)</strong>.</li>
         </ul>
 
-        <h3 style="margin-top: 2.5rem;">Client déjà DartyMax</h3>
+        <h3>Client déjà DartyMax</h3>
         <ul>
-          <li>Contrôler la <strong>facture</strong> ; si manquante 👉 « pas de panique », le client profite du <strong>tarif HG ultra remisé</strong>.</li>
-          <li>Vérifier le <strong>Check-Up</strong> ; si manquant 👉 même tarif HG ultra remisé.</li>
-          <li>Le cas échéant, programmer un <strong>RDV appel Check-Up</strong>.</li>
+          <li>Contrôler la <strong>facture</strong> ; si manquante 👉 proposer le <strong>tarif HG ultra remisé</strong>.</li>
+          <li>Vérifier le <strong>Check-Up</strong> ; si manquant 👉 appliquer le même tarif remisé.</li>
+          <li>Programmer un <strong>RDV appel Check-Up</strong>.</li>
         </ul>
       </article>
 
@@ -143,41 +197,39 @@
           <li>Passer la main aux équipes <strong>comptoir SAV</strong> pour la prise en charge HG.</li>
         </ul>
 
-        <h3 style="margin-top: 2.5rem;">Client déjà DartyMax</h3>
+        <h3>Client déjà DartyMax</h3>
         <ul>
-          <li>Vérifier rapidement le dossier client dans le CRM.</li>
-          <li>Expliquer le <em>pourquoi</em> du forfait HG (facture / Check-Up).</li>
-          <li>Relancer le client sur la récupération de facture ou prise de RDV.</li>
+          <li>Vérifier le dossier client dans le CRM.</li>
+          <li>Expliquer la logique du forfait HG (facture / Check-Up manquants).</li>
+          <li>Relancer le client sur la récupération de facture ou la prise de RDV.</li>
         </ul>
       </article>
 
-      <!-- Relation clients à distance -->
+      <!-- Relation client -->
       <article>
-        <h2>📞 Relation clients à distance</h2>
+        <h2>📞 Relation client à distance</h2>
 
         <h3>Client pas encore DartyMax</h3>
         <ul>
-          <li>Dépister la panne dès le 1ᵉʳ appel.</li>
-          <li>Orienter vers la <strong>souscription immédiate DartyMax</strong> pour profiter de la promo HG.</li>
-          <li>Envoyer le récap CGS + lien de prise de RDV Check-Up.</li>
+          <li>Dépister la panne dès le 1er appel.</li>
+          <li>Orienter vers la <strong>souscription DartyMax</strong> + promo HG.</li>
+          <li>Envoyer les CGS + lien de RDV Check-Up.</li>
           <li>Rappeler que <strong>le RDV Check-Up est obligatoire</strong>.</li>
-          <li>Rappeler que <strong>les produits sans facture seront traités hors régime DartyMax</strong>.</li>
-          <li><strong>Attention</strong> : même en cas d’<em>Upgrade</em>, on doit utiliser la promo HG si le produit est en panne avant la souscription.</li>
+          <li>⚠️ Préciser que sans facture, les produits seront traités hors DartyMax.</li>
+          <li>📌 Même en cas d’upgrade, si le produit est en panne ➜ promo HG obligatoire.</li>
         </ul>
 
-        <h3 style="margin-top: 2.5rem;">Client déjà DartyMax</h3>
+        <h3>Client déjà DartyMax</h3>
         <ul>
-          <li>Contrôler <strong>facture</strong> et <strong>Check-Up</strong> au moment de la prise en charge.</li>
-          <li>Si manquant 👉 « pas de panique », le client profitera du <strong>tarif HG ultra remisé</strong>.</li>
-          <li>Planifier l’<strong>appel Check-Up</strong>.</li>
+          <li>Contrôler la <strong>facture</strong> et le <strong>Check-Up</strong>.</li>
+          <li>Si manquant 👉 proposer le <strong>tarif remisé</strong>.</li>
+          <li>Planifier un <strong>appel Check-Up</strong>.</li>
         </ul>
       </article>
     </section>
 
     <!-- Navigation -->
     <nav class="pager">
-      <a href="tarifs.html">← Tarifs promo</a>
-      <a href="benefices-client.html">Avantages client →</a><br />
       <a href="index.html">🏠 Retour à l’accueil</a>
     </nav>
   </main>

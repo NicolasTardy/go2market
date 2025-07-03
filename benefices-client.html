@@ -2,26 +2,89 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DartyMax – Avantages client</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
-    .gift-checkup {
-      background: #fff7e6;
-      border: 2px dashed #f39c12;
-      padding: 1.5rem;
-      margin: 2rem auto;
-      border-radius: 1rem;
-      text-align: center;
-      font-size: 1.15rem;
-      font-weight: 500;
-      color: #8e4b00;
-      max-width: 750px;
-      position: relative;
+    :root {
+      --darty-blue: #0046be;
+      --fnac-yellow: #f3c300;
+      --light-bg: #f9f9f9;
+      --text-color: #222;
     }
 
-    .gift-checkup::before {
-      content: "🎁 BONUS CHECKUP";
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--light-bg);
+      color: var(--text-color);
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--darty-blue);
+      margin-bottom: 1rem;
+    }
+
+    .highlight {
+      background: #e9f5ff;
+      border-left: 6px solid #3498db;
+      padding: 1.2rem 1.5rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+      font-size: 1.05rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      color: #2c3e50;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 1.2rem 0;
+    }
+
+    ul li {
+      margin-bottom: 1.1rem;
+      padding-left: 2rem;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    ul li::before {
+      content: "🔹";
+      position: absolute;
+      left: 0;
+      font-size: 1.1rem;
+    }
+
+    .bonus-box {
+      background: linear-gradient(145deg, #fff7e0, #fff2cc);
+      border: 2px dashed #f39c12;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2.5rem;
+      position: relative;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    }
+
+    .bonus-box::before {
+      content: "🎁 BONUS FIDÉLITÉ";
       position: absolute;
       top: -1.2rem;
       left: 50%;
@@ -34,68 +97,85 @@
       font-weight: bold;
     }
 
-    .gift-footnote {
+    .bonus-box strong {
+      font-size: 1.3rem;
+      color: #8e4b00;
+    }
+
+    .bonus-box .amount {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #c96a00;
+    }
+
+    .footnote {
+      text-align: center;
       font-size: 0.85rem;
       color: #777;
+      margin-top: 1rem;
+    }
+
+    .back-link {
+      display: block;
       text-align: center;
-      margin-top: 0.5rem;
+      margin-top: 3rem;
+      text-decoration: none;
+      background: var(--darty-blue);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .back-link:hover {
+      background-color: #003a9b;
     }
   </style>
 </head>
 
 <body>
-  <header class="sub-hero benefits">
-    <h1>🎁 Pourquoi le client dit OUI&nbsp;?</h1>
-    <p>Économie immédiate, tranquillité future, zéro paperasse</p>
-  </header>
+  <div class="container">
+    <h1>🎁 Pourquoi le client dit OUI à DartyMax&nbsp;?</h1>
 
-  <main>
-    <section class="content">
-      <p class="voiceover">
-        🎁 Le client gagne sur tous les plans&nbsp;: réparation moins chère
-        aujourd’hui, assistance illimitée grâce à <strong>DartyMax</strong> pour
-        demain, et un parcours simplifié sans paperasse. <em>Win-win</em>
-        assuré&nbsp;!
-      </p>
-    </section>
+    <div class="highlight">
+      Grâce aux <strong>nouvelles offres et forfaits promos Hors Garantie</strong>, <strong>nous avons toujours une solution</strong> pour prendre en charge nos clients !
+    </div>
 
-    <section class="content grid3">
-      <!-- Bénéfice 1 mis à jour -->
-      <article>
-        <h2>💸 Économie immédiate</h2>
-        <p>
-          Grâce aux <strong>différents forfaits à prix promo</strong> sur les réparations Hors Garantie,
-          nos clients économisent <strong>plus de 50 €</strong> en plus des pièces détachées qui sont offertes sur certaines offres !
-          Et ce, dès la première intervention.<br /><br />
-          Cela signifie que nos clients DartyMax <strong>qui n’ont pas de facture produit</strong>
-          ou <strong>qui n’ont pas encore fait l’appel CheckUp</strong> se verront toujours proposer une solution.<br /><br />
-          <strong>Mais n’oubliez pas :</strong> le plus sage reste de bien expliquer à nos clients
-          <em>les règles d’or</em> pour que les produits soient totalement pris en charge sous le régime de DartyMax.
-        </p>
-      </article>
-    </section>
+    <h2>✅ Des avantages concrets</h2>
+    <ul>
+      <li>💸 <strong>Réduction immédiate</strong> sur les forfaits de réparation : jusqu’à 50 € d’économies dès la première panne, et même les pièces détachées offertes pour les réparations en atelier.</li>
+      <li>🧾 <strong>Parcours simple et rassurant</strong> : pas de paperasse, pas de remboursement à demander, tout est pris en charge directement.</li>
+      <li>🔁 Même si le client n’a pas encore fait son CheckUp ou s’il a perdu sa facture, <strong>une solution existe, maintenant dans tous les cas</strong>.</li>
+    </ul>
 
-    <!-- 🎁 Encadré promo carte cadeau -->
-    <section class="content">
-      <div class="gift-checkup">
-        Le client qui réalise son appel CheckUp dans les <strong>30 jours suivant son abonnement</strong> reçoit une<br />
-        <strong>💳 carte cadeau de 15 €</strong> pour acheter des produits d’entretien pour ses appareils !
-      </div>
-      <p class="gift-footnote">* Offre valable jusqu’au 31 octobre 2025</p>
-    </section>
+    <h2>🧩 Les conditions pour profiter pleinement de l’abonnement DartyMax sont simples et claires</h2>
+    <ul>
+      <li>📍 Faire un appel CheckUp (rendez-vous rapide, 20 min en visio ou téléphone).</li>
+      <li>🧾 Fournir la facture pour les produits achetés hors Fnac ou Darty.</li>
+    </ul>
 
-    <!-- Navigation -->
-    <nav class="pager">
-      <a href="roles-equipes.html">← Vos rôles</a>
-      <a href="primes-commissions.html">Vos primes →</a><br />
-      <a href="index.html">🏠 Retour à l’accueil</a>
-    </nav>
-  </main>
+    <div class="bonus-box">
+      Le client qui réalise son appel CheckUp dans les<br />
+      <strong>30 jours suivant son abonnement</strong> reçoit une<br />
+      <span class="amount">💳 Carte cadeau de 15 €</span><br />
+      valable pour l’achat de produits d’entretien Darty.
+    </div>
 
-  <footer>
-    © 2025 Darty – Programme DartyMax | <a href="https://intranet.darty">Intranet</a>
-  </footer>
+    <p class="footnote">* Offre valable jusqu’au 31 octobre 2025</p>
 
-  <script src="assets/js/main.js"></script>
+    <h2>🚀 DartyMax : Une offre dont on peut être fier</h2>
+    <ul>
+      <li>💯 <strong>Plus de 1,4 million</strong> de clients nous font confiance</li>
+      <li>🥇 Un programme <strong>très généreux</strong>, sans équivalent sur le marché.</li>
+      <li>🙌 Une relation client renforcée, plus durable, plus humaine.</li>
+    </ul>
+
+    <a class="back-link" href="index.html">← Retour à l'accueil</a>
+  </div>
 </body>
 </html>

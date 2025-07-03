@@ -2,43 +2,160 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DartyMax – Accueil</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
-    main.grid3 {
+    :root {
+      --darty-blue: #0046be;
+      --fnac-yellow: #f3c300;
+      --light-bg: #f9f9f9;
+      --text-color: #222;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--light-bg);
+      color: var(--text-color);
+    }
+
+    header.hero {
+      padding: 3rem 1rem;
+      text-align: center;
+      background: white;
+      border-bottom: 2px solid var(--darty-blue);
+    }
+
+    header.hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: var(--darty-blue);
+    }
+
+    .intro-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5rem;
       margin-top: 2rem;
+    }
+
+    .intro-box {
+      background: white;
+      border-left: 6px solid var(--fnac-yellow);
+      padding: 1.5rem;
+      border-radius: 12px;
+      width: 300px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .intro-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .intro-box p {
+      margin: 0;
+      font-size: 1rem;
+      color: #000;
+    }
+
+    .intro-end {
+      margin-top: 2.5rem;
+      font-weight: 500;
+      font-size: 1.1rem;
+      color: #444;
+    }
+
+    main.grid3 {
+      margin: 4rem auto 2rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
       align-items: center;
+      gap: 1.2rem;
+      padding: 0 1rem;
     }
 
     .btn {
-      width: 80%;
-      max-width: 400px;
+      display: block;
+      width: 100%;
+      max-width: 550px;
+      background: white;
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--darty-blue);
+      border: 2px solid var(--darty-blue);
+      transition: all 0.3s ease;
+      text-align: left;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .btn:hover {
+      background: var(--darty-blue);
+      color: white;
+    }
+
+    footer {
       text-align: center;
+      font-size: 0.9rem;
+      padding: 2rem 1rem;
+      color: #888;
+      background: #fff;
+      border-top: 1px solid #ddd;
+    }
+
+    footer a {
+      color: var(--darty-blue);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .intro-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn {
+        text-align: center;
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 
 <body>
   <header class="hero">
-    <h1>🎉 Bienvenue dans le parcours DartyMax</h1>
-    <p>🔄 <strong>AVANT</strong> : lorsqu’un client voulait s’abonner à DartyMax alors que son produit était déjà en panne, nous n’avions aucune solution à lui proposer…<br><br>
-    <strong>Désormais</strong> nous avons des solutions et c’est ce que nous allons voir tout au long de ce module d’informations.</p>
+    <h1>🎉 Bienvenue</h1>
+
+    <div class="intro-grid">
+      <div class="intro-box">
+        <p>1️⃣ Comment abonner un client à DartyMax pour prendre en charge ses produits tombés en panne avant la souscription.</p>
+      </div>
+      <div class="intro-box">
+        <p>2️⃣ Comment prendre en charge des produits qui ne sont pas conformes aux CGS de DartyMax.</p>
+      </div>
+      <div class="intro-box">
+        <p>3️⃣ Comment valoriser l’appel CheckUp et organiser la prise de rendez-vous le jour même de la souscription à Darty.</p>
+      </div>
+    </div>
+
+    <p class="intro-end">✨ Désormais il existe des solutions pour faire tout ça ! Et c’est ce que nous allons voir tout au long de ce module d’informations.</p>
   </header>
 
   <main class="content grid3">
-    <a class="btn" href="avant-apres.html">🔄 Avant / Après</a>
-    <a class="btn" href="regles.html">📜 Les 5 règles d'or</a>
-    <a class="btn" href="focus-checkup.html">📞 Focus sur l’appel CheckUp & Nouveautés</a>
-    <a class="btn" href="benefices-client.html">🎁 Avantages client</a>
-    <a class="btn" href="roles-equipes.html">🤝 Vos rôles</a>
-    <a class="btn" href="tarifs.html">💰 Tarifs promo</a>
-    <a class="btn" href="primes-commissions.html">🏆 Primes & Commissions</a>
-    <a class="btn" href="quiz.html">❓ Quiz final</a>
-  
+    <a class="btn" href="avant-apres.html">🔄 Les cas clients « AVANT/APRES » les nouvelles offres promos</a>
+    <a class="btn" href="focus-checkup.html">📞 Focus sur l’appel CheckUp et les 15€ de Carte cadeau</a>
+    <a class="btn" href="regles.html">💬 Comment valoriser l’appel CheckUp ?</a>
+    <a class="btn" href="benefices-client.html">🎁 Les avantages de ces offres promo pour nos clients</a>
+    <a class="btn" href="roles-equipes.html">🤝 Votre rôle en fonction des cas clients ?</a>
+    <a class="btn" href="tarifs.html">💰 Focus sur les nouvelles offres promo</a>
+    <a class="btn" href="primes-commissions.html">🏆 Bonne nouvelle pour les primes</a>
+    <a class="btn" href="quiz.html">❓ Un Quizz pour finir</a>
   </main>
 
   <footer>

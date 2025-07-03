@@ -2,28 +2,151 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DartyMax – Tarifs promo HG</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    :root {
+      --darty-blue: #0046be;
+      --fnac-yellow: #f3c300;
+      --light-bg: #f9f9f9;
+      --text-color: #222;
+      --highlight-blue: #e9f5ff;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: var(--light-bg);
+      color: var(--text-color);
+    }
+
+    .container {
+      max-width: 950px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--darty-blue);
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtext {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    .intro-box {
+      background: var(--highlight-blue);
+      border-left: 6px solid #3498db;
+      padding: 1.2rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 0.5rem;
+    }
+
+    table.tarif-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      min-width: 780px;
+    }
+
+    table.tarif-table th,
+    table.tarif-table td {
+      border: 1px solid #ddd;
+      padding: 0.9rem 1rem;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    table.tarif-table thead th {
+      background-color: #f0f4f8;
+      color: #2c3e50;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    table.tarif-table tbody tr:nth-child(even) {
+      background-color: #f9fbfd;
+    }
+
+    th:nth-child(1), td:nth-child(1) { width: 140px; }
+    th:nth-child(2), td:nth-child(2) { width: 200px; }
+
+    td:nth-child(3),
+    td:nth-child(4),
+    td:nth-child(7) {
+      white-space: nowrap;
+    }
+
+    .note {
+      font-size: 0.85rem;
+      color: #666;
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 3rem;
+      text-decoration: none;
+      background: var(--darty-blue);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .back-link:hover {
+      background-color: #003a9b;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 2rem 1rem;
+      color: #888;
+      background: #fff;
+      border-top: 1px solid #ddd;
+    }
+
+    footer a {
+      color: var(--darty-blue);
+      text-decoration: underline;
+    }
+  </style>
 </head>
 
 <body>
-  <header class="sub-hero price">
+  <div class="container">
     <h1>💰 Tarifs Hors Garantie – Offre promo ⭐</h1>
-    <p>Une remise immédiate + DartyMax pour demain</p>
-  </header>
+    <p class="subtext">Une remise immédiate + DartyMax pour demain</p>
 
-  <main>
-    <!-- Message d’introduction -->
-    <section class="content">
-      <p class="voiceover">
-        💰 <strong>L’offre promo HG/Dmax !</strong> C’est tout simplement une
-        offre <em>canon</em>.
-      </p>
-    </section>
+    <div class="intro-box">
+      💰 <strong>L’offre promo HG/Dmax</strong> permet de réparer à prix réduit et de protéger pour la suite. Une offre <em>canon</em> à présenter à tous nos clients concernés !
+    </div>
 
-    <!-- Tableau des tarifs -->
-    <section class="content">
+    <div class="table-wrapper">
       <table class="tarif-table">
         <thead>
           <tr>
@@ -33,7 +156,7 @@
             <th>Forfait réparation</th>
             <th>Pièces détachées (P-D)</th>
             <th>Qualirépar</th>
-            <th>Total prix pour le client estimé</th>
+            <th>Total prix estimé</th>
           </tr>
         </thead>
         <tbody>
@@ -43,7 +166,7 @@
             <td><strong>89,99 €</strong></td>
             <td>Offert</td>
             <td>À charge</td>
-            <td>−X €, X étant la valeur du montant du bonus Qualirépar<br />de la famille concernée (si éligible)</td>
+            <td>−X €, X = montant du bonus Qualirépar<br />(si éligible)</td>
             <td>39,99 € à 59,99 € + P-D</td>
           </tr>
           <tr>
@@ -52,16 +175,16 @@
             <td><strong>49,98 €</strong></td>
             <td>Offert</td>
             <td>Offert</td>
-            <td>Inclus dans la promo<br />et utilisé comme moyen de paiement<br />(forfait réparation = montant Qualirépar)</td>
+            <td>Inclus dans la promo<br />et utilisé comme moyen de paiement</td>
             <td>39,99 € à 59,99 €</td>
           </tr>
           <tr>
             <td>IAD</td>
             <td>Déjà abonné DartyMax<br />mais non conforme aux CGS</td>
-            <td><strong>Forfait de 60 € à 65 €</strong></td>
+            <td><strong>60 € à 65 €</strong></td>
             <td>Offert</td>
             <td>Offert</td>
-            <td>Non concerné (en lot 1)</td>
+            <td>Non concerné (lot 1)</td>
             <td>60 € à 65 €</td>
           </tr>
           <tr>
@@ -70,32 +193,22 @@
             <td><strong>49,98 €</strong></td>
             <td>Offert</td>
             <td>Offert</td>
-            <td>Inclus dans la promo<br />et utilisé comme moyen de paiement<br />(forfait réparation = montant Qualirépar)</td>
+            <td>Inclus dans la promo<br />et utilisé comme moyen de paiement</td>
             <td>39,99 € à 59,99 €</td>
           </tr>
         </tbody>
       </table>
+    </div>
 
-      <p class="note">
-        <small>
-          P-D : Pièces détachées. Les montants “−X €” correspondent au bonus
-          Qualirépar, déduit lorsque le produit est éligible.
-        </small>
-      </p>
-    </section>
+    <p class="note">
+      <strong>P-D</strong> : pièces détachées. Les montants “−X €” correspondent au bonus Qualirépar déduit du prix final lorsque le produit est éligible.
+    </p>
 
-    <!-- Navigation -->
-    <nav class="pager">
-      <a href="avant-apres.html">← Avant / Après</a>
-      <a href="roles-equipes.html">Vos rôles →</a><br />
-      <a href="index.html">🏠 Retour à l’accueil</a>
-    </nav>
-  </main>
+    <a class="back-link" href="index.html">← Retour à l’accueil</a>
+  </div>
 
   <footer>
     © 2025 Darty – Programme DartyMax | <a href="https://intranet.darty">Intranet</a>
   </footer>
-
-  <script src="assets/js/main.js"></script>
 </body>
 </html>

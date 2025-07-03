@@ -2,158 +2,198 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>DartyMax – Les 5 règles d’or</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comment valoriser l’appel CheckUp ?</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/style.css" />
   <style>
+    :root {
+      --darty-blue: #0046be;
+      --fnac-yellow: #f3c300;
+      --light-bg: #f9f9f9;
+      --text-color: #222;
+    }
+
     body {
-      background-color: #f5f7fa;
       font-family: 'Poppins', sans-serif;
       margin: 0;
-      padding: 0;
+      background: var(--light-bg);
+      color: var(--text-color);
+    }
+
+    .container {
+      max-width: 850px;
+      margin: 3rem auto;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    h1 {
       text-align: center;
-      color: #2b3a67;
-    }
-
-    header.sub-hero.rules {
-      background: linear-gradient(to right, #ffe066, #f4d35e);
-      padding: 2rem 1rem;
-      border-bottom: 3px solid #f4d35e;
-    }
-
-    header h1 {
-      margin: 0;
       font-size: 2rem;
+      color: var(--darty-blue);
+      margin-bottom: 1rem;
     }
 
-    header p {
-      font-size: 1.2rem;
-      margin-top: 0.5rem;
+    .highlight {
+      background: #e9f5ff;
+      border-left: 6px solid #3498db;
+      padding: 1.2rem 1.5rem;
+      border-radius: 8px;
+      margin: 2rem 0;
+      font-size: 1.05rem;
     }
 
-    main {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      color: #2c3e50;
     }
 
-    .golden-rules {
-      background-color: #fffde6;
-      border: 2px solid #f9c80e;
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2.5rem;
-      text-align: left;
-    }
-
-    .golden-rules h2 {
-      color: #d4a200;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-
-    .golden-rules ol {
+    ul {
       list-style: none;
-      padding: 0;
+      padding-left: 0;
+      margin: 1.2rem 0;
     }
 
-    .golden-rules li {
-      margin-bottom: 1.5rem;
-      padding-left: 2.5rem;
+    ul li {
+      margin-bottom: 1.1rem;
+      padding-left: 2rem;
       position: relative;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
-    .golden-rules li::before {
-      content: "⭐";
+    ul li::before {
+      content: "🔹";
       position: absolute;
       left: 0;
-      font-size: 1.2rem;
-      top: 0.1rem;
-    }
-
-    .golden-rules strong {
-      color: #2b3a67;
-    }
-
-    section.content p {
       font-size: 1.1rem;
-      margin-bottom: 2rem;
     }
 
-    nav.pager {
-      margin-top: 2rem;
+    .bonus-box {
+      background: linear-gradient(145deg, #fff7e0, #fff2cc);
+      border: 2px dashed #f39c12;
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2.5rem;
+      position: relative;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
     }
 
-    nav.pager a {
-      margin: 0 1rem;
-      text-decoration: none;
-      color: #2b3a67;
+    .bonus-box::before {
+      content: "🎁 BONUS FIDÉLITÉ";
+      position: absolute;
+      top: -1.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f39c12;
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
       font-weight: bold;
     }
 
-    footer {
-      background-color: #ececec;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-      font-size: 0.9rem;
+    .bonus-box strong {
+      font-size: 1.3rem;
+      color: #8e4b00;
     }
 
-    footer a {
-      color: #2b3a67;
-      text-decoration: underline;
+    .bonus-box .amount {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #c96a00;
+    }
+
+    .data-box {
+      background-color: #f1f3f5;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.04);
+    }
+
+    .reminder {
+      background: #fffbea;
+      border-left: 5px solid #f3c300;
+      padding: 1rem 1.5rem;
+      margin-top: 2rem;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 3rem;
+      text-decoration: none;
+      background: var(--darty-blue);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      max-width: 280px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .back-link:hover {
+      background-color: #003a9b;
     }
   </style>
 </head>
 
 <body>
-  <header class="sub-hero rules">
-    <h1>📜 Les 5 règles d’or DartyMax Promo HG</h1>
-    <p>Des réflexes simples, pour une satisfaction client maximale ✨</p>
-  </header>
+  <div class="container">
+    <h1>📞 Comment valoriser l’appel CheckUp ?</h1>
 
-  <main>
-    <section class="golden-rules">
-      <h2>⭐ Les 5 règles d’or à suivre</h2>
-      <ol>
-        <li>
-          <strong>Présenter les CGS au client qui s’abonne</strong><br />
-          et bien préciser qu’un produit <u>déjà en panne avant la souscription</u> ne pourra <strong>pas être pris en charge par DartyMax</strong>.
-        </li>
-        <li>
-          <strong>Présenter la promotion exceptionnelle</strong><br />
-          sur la <strong>réparation Hors Garantie</strong> du produit <u>déjà en panne</u> si le client s’abonne à DartyMax.
-        </li>
-        <li>
-          <strong>Expliquer l’importance de l’appel CheckUp</strong><br />
-          pour assurer le statut “sous maintenance” de ses produits et la qualité du service dans la durée.
-        </li>
-        <li>
-          <strong>Rappeler l’importance d’avoir les factures</strong><br />
-          pour tout produit acheté <u>hors Fnac ou Darty</u>.
-        </li>
-        <li>
-          <strong>Valoriser la générosité du programme DartyMax</strong><br />
-          : réparations incluses, forfaits remisés, zéro paperasse, tranquillité totale.
-        </li>
-      </ol>
-    </section>
+    <div class="highlight">
+      📆 L’appel CheckUp est un moment obligatoire à programmer avec le client <strong>le jour de sa souscription à DartyMax</strong>. C’est essentiel pour qu’il puisse bénéficier de la prise en charge.
+    </div>
 
-    <section class="content">
-      <p>✅ Appliquer ces 5 règles, c’est garantir <strong>la clarté, la confiance et la satisfaction</strong> du client, même dans les situations complexes.</p>
-    </section>
+    <h2>💬 Réponses clés pour convaincre</h2>
+    <ul>
+      <li>✅ L’appel est <strong>obligatoire</strong>. DartyMax n’est pas une assurance : il n’y a pas de carence, mais un contrôle des produits est requis.</li>
+      <li>🔍 Il permet de <strong>vérifier que les produits sont fonctionnels</strong> dès la souscription.</li>
+      <li>🛡️ Seuls les produits ayant fait l’objet de maintenance préventive pourront être pris en charge.<br />
+      Lors de l’appel, <strong>tous les produits du parc sont mis sous statut “maintenance”</strong>.<br />
+      ⚠️ Pour les produits achetés ailleurs que chez Fnac ou Darty, la <strong>facture est indispensable</strong>.</li>
+      <li>🎁 <strong>15 € offerts</strong> en carte cadeau pour acheter des produits d’entretien.</li>
+    </ul>
 
-    <nav class="pager">
-      <a href="index.html">← Retour à l'accueil</a>
-      <a href="avant-apres.html">Ce qui change →</a>
-    </nav>
-  </main>
+    <div class="bonus-box">
+      Le client qui réalise son appel CheckUp dans les<br />
+      <strong>30 jours suivant son abonnement</strong> reçoit une<br />
+      <span class="amount">💳 Carte cadeau de 15 €</span><br />
+      valable pour l’achat de produits d’entretien Darty.
+    </div>
 
-  <footer>
-    © 2025 Darty – Programme DartyMax | <a href="https://intranet.darty">Intranet</a>
-  </footer>
+    <h2>📈 Chiffres à retenir</h2>
+    <div class="data-box">
+      <ul>
+        <li>🔧 54 % des gros électroménagers tombent en panne avant 5 ans</li>
+        <li>🔄 1 panne sur 2 est évitable avec un bon entretien</li>
+        <li>💸 Coût moyen d’une panne : 123 € (lave-linge), 133 € (lave-vaisselle)</li>
+      </ul>
+    </div>
 
-  <script src="assets/js/main.js"></script>
+    <h2>✅ En résumé</h2>
+    <ul>
+      <li>L’appel CheckUp est une <strong>étape d’éligibilité</strong> obligatoire.</li>
+      <li>Il permet <strong>entretien, pédagogie et fidélisation</strong>.</li>
+      <li>Il est noté <strong>4,8/5</strong> par nos clients.</li>
+      <li>Il est <strong>gratuit</strong> et accompagné d’une carte cadeau de <strong>15 €</strong>.</li>
+      <li>Il doit être <strong>planifié dès la souscription</strong>, avec le client en magasin.</li>
+    </ul>
+
+    <div class="reminder">📱 Des QR codes sont disponibles en magasin pour prendre RDV immédiatement. Pensez à les utiliser ou les faire flasher au client !</div>
+
+    <a class="back-link" href="index.html">← Retour à l'accueil</a>
+  </div>
 </body>
 </html>
