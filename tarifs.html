@@ -30,11 +30,46 @@
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     }
 
-    h1 {
-      text-align: center;
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .header-row h1 {
       font-size: 2rem;
       color: var(--darty-blue);
-      margin-bottom: 0.5rem;
+      margin: 0;
+      flex: 1;
+    }
+
+    .download-section {
+      text-align: right;
+      max-width: 280px;
+    }
+
+    .download-section p {
+      font-size: 0.9rem;
+      color: #555;
+      margin: 0 0 0.5rem;
+    }
+
+    .download-section a {
+      display: inline-block;
+      text-decoration: none;
+      background: var(--darty-blue);
+      color: white;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .download-section a:hover {
+      background-color: #003a9b;
     }
 
     p.subtext {
@@ -139,7 +174,18 @@
 
 <body>
   <div class="container">
-    <h1>💰 Tarifs Hors Garantie – Offre promo ⭐</h1>
+
+    <div class="header-row">
+      <h1>💰 Tarifs Hors Garantie – Offre promo ⭐</h1>
+      <div class="download-section">
+        <p>
+          Attention ces tarifs promos sont valides durant les périodes de promotions,<br />
+          demandez à vos managers les dates de début et de fin
+        </p>
+        <a href="tarifs.pdf" download>Télécharger les tarifs</a>
+      </div>
+    </div>
+
     <p class="subtext">Une remise immédiate + DartyMax pour demain</p>
 
     <div class="intro-box">
