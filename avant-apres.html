@@ -83,6 +83,14 @@
       background: #f0f0f0;
     }
 
+    .tr-non-abonne {
+      background-color: #e6f0ff;
+    }
+
+    .tr-deja-abonne {
+      background-color: #fff8db;
+    }
+
     .note-attention {
       max-width: 1000px;
       margin: 1.5rem auto;
@@ -154,17 +162,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr class="tr-non-abonne">
         <td>Client non abonné souhaitant s’abonner à DartyMax avec un produit déjà en panne</td>
         <td>• Souscription immédiate à DartyMax<br> + Achat d’un forfait HG ultra remisé</td>
         <td>✅ Produit réparé en Hors Garantie, puis intégré au parc DartyMax. Le client devra réaliser son appel CheckUp pour que tout son parc soit couvert par DartyMax (en fonction des formules)</td>
       </tr>
-      <tr>
+      <tr class="tr-deja-abonne">
         <td>Client déjà abonné à DartyMax souhaitant faire réparer un produit hors formule</td>
         <td>• Upgrade vers une formule DartyMax adaptée<br> + Achat d’un forfait HG remisé</td>
         <td>✅ Produit réparé en Hors Garantie, puis intégré au parc DartyMax. Le client devra réaliser son appel CheckUp pour que tout son parc soit couvert par DartyMax (en fonction des formules)</td>
       </tr>
-      <tr>
+      <tr class="tr-deja-abonne">
         <td>Client déjà abonné à DartyMax avec un produit sans facture ou sans appel CheckUp</td>
         <td>• Forfait HG remisé proposé sans condition</td>
         <td>✅ Produit réparé en Hors Garantie, puis intégré au parc DartyMax. Le client devra réaliser son appel CheckUp pour que tout son parc soit couvert par DartyMax (en fonction des formules)</td>
