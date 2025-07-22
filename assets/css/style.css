@@ -1,211 +1,138 @@
-/* --------------------------------------------------
-   Variables globales
--------------------------------------------------- */
-:root{
-  --rouge-darty:#E2001A;
-  --bleu-electric:#0066FF;
-  --jaune-flash:#FFC400;
-  --gris-fond:#F7F7F7;
-  --gris-texte:#222;
-  --blanc:#FFFFFF;
-
-  --font:'Poppins',sans-serif;
+:root {
+  --darty-red: #FF1E3A;
+  --darty-blue: #0046BE;
+  --accent-yellow: #FFD700;
+  --bg-light: #F9FAFC;
+  --text-dark: #1A1A1A;
+  --text-muted: #555;
+  --font-base: 'Poppins', sans-serif;
+  --transition: 0.3s ease;
 }
 
-/* --------------------------------------------------
-   Réinitialisation légère
--------------------------------------------------- */
-*{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:var(--font);
-  background:var(--gris-fond);
-  color:var(--gris-texte);
-  line-height:1.5;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-base);
+  background: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
 }
-img,video{max-width:100%;height:auto;border-radius:1rem}
-
-/* --------------------------------------------------
-   Héros & sous-héros
--------------------------------------------------- */
-.hero,
-.sub-hero{
-  text-align:center;
-  padding:4rem 1rem 3rem;
-  color:var(--blanc);
-  background:linear-gradient(135deg,var(--rouge-darty),var(--bleu-electric));
-}
-.hero h1,
-.sub-hero h1{font-size:2.5rem;font-weight:600;margin-bottom:.5rem}
-.hero p,
-.sub-hero p{font-size:1.125rem;font-weight:300;opacity:.9}
-
-/* Couleurs spécifiques par page (optionnel) */
-.sub-hero.price{background:linear-gradient(135deg,var(--bleu-electric),var(--jaune-flash))}
-.sub-hero.benefits{background:linear-gradient(135deg,var(--jaune-flash),var(--bleu-electric))}
-.sub-hero.quiz{background:linear-gradient(135deg,var(--bleu-electric),var(--rouge-darty))}
-
-/* --------------------------------------------------
-   Navigation principale
--------------------------------------------------- */
-.main-nav{
-  margin-top:2rem;
-  display:flex;
-  gap:.75rem;
-  flex-wrap:wrap;
-  justify-content:center;
-}
-.main-nav a{
-  padding:.75rem 1.25rem;
-  border-radius:40px;
-  text-decoration:none;
-  font-weight:600;
-  background:var(--blanc);
-  color:var(--rouge-darty);
-  transition:transform .2s;
-}
-.main-nav .cta{background:var(--jaune-flash);color:#000}
-.main-nav a:hover{transform:translateY(-2px)}
-
-/* --------------------------------------------------
-   Blocs vidéo
--------------------------------------------------- */
-.video-block{
-  background:var(--blanc);
-  margin:2.5rem auto;
-  padding:2rem;
-  border-radius:1.25rem;
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
-  max-width:820px;
-}
-.voiceover{margin-top:1rem;font-style:italic}
-
-/* --------------------------------------------------
-   Boutons et liens d’action
--------------------------------------------------- */
-.btn{
-  display:inline-block;
-  padding:.9rem 2rem;
-  border-radius:45px;
-  background:var(--jaune-flash);
-  color:#000;
-  font-weight:600;
-  text-decoration:none;
-  transition:transform .2s;
-}
-.btn:hover{transform:scale(1.05)}
-.cta-block{text-align:center;margin:3rem 0}
-.cta-block h2{font-size:1.6rem;font-weight:600;margin-bottom:1rem}
-
-/* --------------------------------------------------
-   Sections / contenu générique
--------------------------------------------------- */
-.content{max-width:1100px;margin:0 auto 3rem;padding:0 1rem}
-
-/* Grille 3 colonnes responsive */
-.grid3{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:1.5rem;
-}
-article{
-  background:var(--blanc);
-  border-radius:1rem;
-  padding:1.5rem 1.25rem;
-  box-shadow:0 4px 12px rgba(0,0,0,.05);
-}
-article h2{margin-bottom:.6rem;font-weight:600;font-size:1.2rem}
-.highlight{color:var(--rouge-darty);font-weight:600}
-.highlight-box{
-  background:var(--jaune-flash);
-  padding:1rem 1.25rem;
-  border-radius:1rem;
-  margin-top:2rem;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-/* --------------------------------------------------
-   Listes règles & tableaux
--------------------------------------------------- */
-.rule-list{list-style:none;counter-reset:rule}
-.rule-list li{
-  margin:.8rem 0;
-  padding:.6rem .8rem;
-  background:var(--blanc);
-  border-left:6px solid var(--rouge-darty);
-  border-radius:.5rem;
-  box-shadow:0 2px 6px rgba(0,0,0,.05);
+a { text-decoration: none; color: inherit; }
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, var(--darty-red), var(--darty-blue));
+  color: white;
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
-.rule-list .num{
-  display:inline-block;
-  width:22px;
-  font-weight:600;
-  color:var(--rouge-darty);
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  z-index: 1;
+}
+.hero .subtitle {
+  margin-top: 0.75rem;
+  font-weight: 300;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  z-index: 1;
 }
 
-/* Tableaux génériques */
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:.95rem;
+/* Navigation */
+.main-nav {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
 }
-thead th{
-  background:var(--rouge-darty);
-  color:var(--blanc);
-  font-weight:600;
-  padding:.6rem .4rem;
+.main-nav a {
+  padding: 0.75rem 1.5rem;
+  background: white;
+  border-radius: 50px;
+  font-weight: 600;
+  text-align: center;
+  border: 2px solid var(--darty-red);
+  transition: var(--transition);
+  color: var(--darty-red);
 }
-tbody td{
-  background:var(--blanc);
-  padding:.55rem .4rem;
-  border-bottom:1px solid #e5e5e5;
+.main-nav a:hover {
+  background: var(--darty-red);
+  color: white;
+  transform: translateY(-3px);
 }
-tbody tr:nth-child(even) td{background:#fafafa}
+.main-nav .cta {
+  background: var(--accent-yellow);
+  color: var(--text-dark);
+  border-color: var(--accent-yellow);
+}
+.main-nav .cta:hover {
+  background: var(--darty-blue);
+  color: white;
+}
 
-/* --------------------------------------------------
-   Pager (navigation bas de page)
--------------------------------------------------- */
-.pager{
-  display:flex;
-  justify-content:space-between;
-  max-width:1100px;
-  padding:0 1rem;
-  margin:2.5rem auto 4rem;
+/* Intro Section */
+.intro .grid3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
 }
-.pager a{
-  color:var(--bleu-electric);
-  text-decoration:none;
-  font-weight:600;
+article {
+  background: white;
+  padding: 2rem;
+  border-left: 6px solid var(--accent-yellow);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: var(--transition);
 }
-.pager a:hover{text-decoration:underline}
+article:hover {
+  transform: translateY(-5px);
+}
+article h2 {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--darty-blue);
+}
+.intro-end {
+  margin-top: 2rem;
+  text-align: center;
+  font-weight: 500;
+  color: var(--text-muted);
+}
 
-/* --------------------------------------------------
-   Footer
--------------------------------------------------- */
-footer{
-  text-align:center;
-  font-size:.85rem;
-  padding:1.5rem .5rem 2rem;
-  color:#666;
+/* Footer */
+footer {
+  background: white;
+  padding: 2rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  border-top: 1px solid #e0e0e0;
 }
-footer a{color:var(--bleu-electric)}
+footer a {
+  color: var(--darty-blue);
+  text-decoration: underline;
+  transition: var(--transition);
+}
+footer a:hover {
+  color: var(--darty-red);
+}
 
-/* --------------------------------------------------
-   Quiz
--------------------------------------------------- */
-.quiz-form fieldset{
-  margin:1.3rem 0;
-  border:1px solid #ddd;
-  border-radius:.7rem;
-  padding:1rem 1.2rem;
-  background:var(--blanc);
-}
-.quiz-form legend{font-weight:600}
-.quiz-result{
-  margin-top:2rem;
-  padding:1.2rem;
-  border-radius:1rem;
-  background:var(--blanc);
-  box-shadow:0 3px 10px rgba(0,0,0,.07);
-  font-size:1.1rem;
-  font-weight:600;
-  text-align:center;
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .main-nav { grid-template-columns: 1fr; }
 }

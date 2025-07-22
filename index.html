@@ -9,7 +9,6 @@
   <style>
     :root {
       --darty-blue: #0046be;
-      --fnac-yellow: #f3c300;
       --light-bg: #f9f9f9;
       --text-color: #222;
     }
@@ -34,7 +33,8 @@
       color: var(--darty-blue);
     }
 
-    .intro-grid {
+    /* Cartes rectangles avec effets d'ombre au survol */
+    .bubble-container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -42,31 +42,33 @@
       margin-top: 2rem;
     }
 
-    .intro-box {
-      background: white;
-      border-left: 6px solid var(--fnac-yellow);
-      padding: 1.5rem;
+    .bubble {
+      background: white; /* arrière-plan blanc */
+      border: 2px solid var(--darty-blue);
       border-radius: 12px;
-      width: 300px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: transform 0.3s ease;
+      width: 260px;
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      text-align: left;
+      padding: 1rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .intro-box:hover {
+    .bubble:hover {
       transform: translateY(-5px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
     }
 
-    .intro-box p {
+    .bubble p {
       margin: 0;
       font-size: 1rem;
-      color: #000;
-    }
-
-    .intro-end {
-      margin-top: 2.5rem;
+      color: var(--darty-blue);
       font-weight: 500;
-      font-size: 1.1rem;
-      color: #444;
+      line-height: 1.4;
     }
 
     main.grid3 {
@@ -115,11 +117,14 @@
     }
 
     @media (max-width: 768px) {
-      .intro-grid {
+      .bubble-container {
         flex-direction: column;
         align-items: center;
       }
-
+      .bubble {
+        width: 80%;
+        max-width: 300px;
+      }
       .btn {
         text-align: center;
         padding: 1rem;
@@ -130,28 +135,26 @@
 
 <body>
   <header class="hero">
-    <h1>🎉 Bienvenue</h1>
+    <h1>🎉 Bienvenue dans ce module. Nous allons découvrir comment :</h1>
 
-    <div class="intro-grid">
-      <div class="intro-box">
-        <p>1️⃣ Comment abonner un client à DartyMax pour prendre en charge ses produits tombés en panne avant la souscription.</p>
+    <div class="bubble-container">
+      <div class="bubble">
+        <p>1️⃣ abonner un client à DartyMax même avec un produit en panne avant la souscription,<br>grâce aux forfaits HG remisés</p>
       </div>
-      <div class="intro-box">
-        <p>2️⃣ Comment prendre en charge des produits qui ne sont pas conformes aux CGS de DartyMax.</p>
+      <div class="bubble">
+        <p>2️⃣ prendre en charge des produits sans factures ou qui n’ont pas le statut « sous maintenance »,<br>grâce aux forfaits HG remisés</p>
       </div>
-      <div class="intro-box">
-        <p>3️⃣ Comment valoriser l’appel CheckUp et organiser la prise de rendez-vous le jour même de la souscription à Darty.</p>
+      <div class="bubble">
+        <p>3️⃣ valoriser l’appel CheckUp et organiser la prise de rendez-vous le jour même de la souscription à DartyMax</p>
       </div>
     </div>
-
-    <p class="intro-end">✨ Désormais il existe des solutions pour faire tout ça ! Et c’est ce que nous allons voir tout au long de ce module d’informations.</p>
   </header>
 
   <main class="content grid3">
     <a class="btn" href="avant-apres.html">🔄 Les cas clients « AVANT/APRES » les nouvelles offres promos</a>
     <a class="btn" href="focus-checkup.html">📞 Focus sur l’appel CheckUp et les 15€ de Carte cadeau</a>
     <a class="btn" href="regles.html">💬 Comment valoriser l’appel CheckUp ?</a>
-    <a class="btn" href="benefices-client.html">🎁 Les avantages de ces offres promo pour nos clients</a>
+    <a class="btn" href="benefices-client.html">🎁 Soyons fiers de notre programme DartyMax</a>
     <a class="btn" href="roles-equipes.html">🤝 Votre rôle en fonction des cas clients ?</a>
     <a class="btn" href="tarifs.html">💰 Focus sur les nouvelles offres promo</a>
     <a class="btn" href="primes-commissions.html">🏆 Bonne nouvelle pour les primes</a>

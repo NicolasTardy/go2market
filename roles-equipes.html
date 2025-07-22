@@ -39,7 +39,7 @@
     }
 
     .rules-block {
-      background: #fffce8;
+      background: #fff;
       border-left: 6px solid var(--fnac-yellow);
       margin: 2rem auto;
       max-width: 900px;
@@ -54,7 +54,7 @@
       color: #111;
     }
 
-    .rules-block ul {
+    .rules-block ol {
       padding-left: 1.2rem;
       margin: 1rem 0;
     }
@@ -74,14 +74,14 @@
       padding: 2rem 1rem;
     }
 
-    .stacked {
+    section.stacked {
       display: flex;
       flex-direction: column;
       gap: 2rem;
     }
 
     article {
-      background-color: #ffffff;
+      background-color: #fff;
       border-radius: 12px;
       padding: 1.5rem;
       box-shadow: 0 4px 10px rgba(0,0,0,0.05);
@@ -145,7 +145,6 @@
     }
   </style>
 </head>
-
 <body>
   <header class="sub-hero">
     <h1>🤝 Vos rôles clés</h1>
@@ -154,81 +153,69 @@
 
   <section class="rules-block">
     <h2>⭐ Les 5 règles d’or à suivre</h2>
-    <ul>
-      <li>Présenter les CGS au client qui s’abonne et bien préciser qu’un produit déjà en panne avant la souscription ne pourra pas être pris en charge par DartyMax.</li>
-      <li>Présenter la promotion exceptionnelle sur la réparation Hors Garantie du produit déjà en panne si le client s’abonne à DartyMax.</li>
-      <li>Expliquer l’importance de l’appel CheckUp pour assurer le statut “sous maintenance” de ses produits et la qualité du service dans la durée.</li>
-      <li>Rappeler l’importance d’avoir les factures pour tout produit acheté hors Fnac ou Darty.</li>
-      <li>Valoriser la générosité du programme DartyMax : réparations incluses, forfaits remisés, zéro paperasse, tranquillité totale.</li>
-    </ul>
-    <p>✅ Appliquer ces 5 règles, c’est garantir la clarté, la confiance et la satisfaction du client, même dans les situations complexes.</p>
+    <ol>
+      <li>Présenter clairement les CGS au moment de la souscription : un produit déjà en panne avant l’abonnement ne peut pas être couvert par DartyMax.</li>
+      <li>Mettre en avant la promotion exceptionnelle applicable aux produits déjà en panne, à condition que le client s’abonne immédiatement à DartyMax.</li>
+      <li>Expliquer l’importance de l’appel CheckUp, indispensable pour garantir le statut “sous maintenance” des produits et assurer un service durable et efficace.</li>
+      <li>Rappeler au client l’importance de conserver les factures pour tout produit acheté hors Fnac ou Darty, condition essentielle à la prise en charge.</li>
+      <li>Valoriser la générosité du programme DartyMax : Entretien des appareils, réparations illimitées, cartes cadeaux, remises mensuelles, pass partenaires…</li>
+    </ol>
+    <p>✅ En appliquant ces 5 règles, vous assurez une information claire, une relation de confiance et une satisfaction client durable – même dans les cas les plus complexes.</p>
   </section>
 
   <main>
     <section class="stacked">
-      <!-- Comptoir SAV -->
       <article>
-        <h2>🧰 Comptoir SAV</h2>
-
-        <h3>Client pas encore DartyMax</h3>
+        <h2>🧰 Comptoir SAV magasins : Un client se présente au comptoir SAV avec un produit en panne :</h2>
+        <h3>📌 Client NON ABONNÉ à DartyMax</h3>
         <ul>
-          <li>Confirmer <em>produit déjà en panne</em> avant la souscription.</li>
-          <li>Proposer la <strong>promo HG + souscription DartyMax</strong>.</li>
-          <li>Abonner le client et <strong>traiter la prise en charge HG (atelier)</strong>.</li>
+          <li>✅ Confirmer que le produit est déjà en panne avant la souscription.</li>
+          <li>💬 Proposer la promotion Hors Garantie applicable uniquement si le client s’abonne à DartyMax.</li>
+          <li>📝 Souscrire le client à DartyMax puis traiter la prise en charge en Hors Garantie</li>
+          <li>❌ Si le client refuse de s’abonner, la prise en charge se fait alors au tarif classique Hors Garantie, sans promotion.</li>
         </ul>
-
-        <h3>Client déjà DartyMax</h3>
+        <h3>📌 Client DÉJÀ ABONNÉ à DartyMax</h3>
         <ul>
-          <li>Contrôler la <strong>facture</strong> ; si manquante 👉 proposer le <strong>tarif HG ultra remisé</strong>.</li>
-          <li>Vérifier le <strong>Check-Up</strong> ; si manquant 👉 appliquer le même tarif remisé.</li>
-          <li>Programmer un <strong>RDV appel Check-Up</strong>.</li>
+          <li>🧾 Contrôler la présence de la facture. Si absente 👉 proposer le tarif HG ultra remisé (hors CGS).</li>
+          <li>📞 Vérifier que l’appel Check-Up a été réalisé si la panne est dans les 30 jours. Si manquant 👉 même tarif remisé.</li>
+          <li>👉 Programmer un RDV Check-Up pour garantir la future prise en charge des autres produits du parc.</li>
         </ul>
       </article>
 
-      <!-- Vente magasin -->
       <article>
-        <h2>🛍️ Équipes vente</h2>
-
-        <h3>Client pas encore DartyMax</h3>
+        <h2>🛍️ Vendeuse/Vendeur : Un client explique avoir un produit en panne :</h2>
+        <h3>📌 Client NON ABONNÉ à DartyMax</h3>
         <ul>
-          <li><strong>Réparer plutôt que remplacer</strong> grâce à la promo HG/DMax.</li>
-          <li>Mettre en avant l’<em>économie immédiate</em>.</li>
-          <li>Programmer le <strong>Check-Up</strong> lors de l’abonnement.</li>
-          <li>Passer la main aux équipes <strong>comptoir SAV</strong> pour la prise en charge HG.</li>
+          <li>✅ Confirmer que le produit est déjà en panne avant la souscription.</li>
+          <li>💬 Proposer la promotion Hors Garantie applicable uniquement si le client s’abonne à DartyMax.</li>
+          <li>📝 Souscrire le client à DartyMax puis passer la main aux équipes comptoir pour la prise en charge HG.</li>
+          <li>❌ Si le client refuse de s’abonner, la prise en charge se fait alors au tarif classique Hors Garantie, sans promotion.</li>
         </ul>
-
-        <h3>Client déjà DartyMax</h3>
+        <h3>📌 Client DÉJÀ ABONNÉ à DartyMax</h3>
         <ul>
-          <li>Vérifier le dossier client dans le CRM.</li>
-          <li>Expliquer la logique du forfait HG (facture / Check-Up manquants).</li>
-          <li>Relancer le client sur la récupération de facture ou la prise de RDV.</li>
+          <li>🧾 Passer la main aux équipes comptoir</li>
         </ul>
       </article>
 
-      <!-- Relation client -->
       <article>
-        <h2>📞 Relation client à distance</h2>
-
-        <h3>Client pas encore DartyMax</h3>
+        <h2>📞 RCD : Un client appelle la RCD pour déclarer une panne :</h2>
+        <h3>📌 Client NON ABONNÉ à DartyMax</h3>
         <ul>
-          <li>Dépister la panne dès le 1er appel.</li>
-          <li>Orienter vers la <strong>souscription DartyMax</strong> + promo HG.</li>
-          <li>Envoyer les CGS + lien de RDV Check-Up.</li>
-          <li>Rappeler que <strong>le RDV Check-Up est obligatoire</strong>.</li>
-          <li>⚠️ Préciser que sans facture, les produits seront traités hors DartyMax.</li>
-          <li>📌 Même en cas d’upgrade, si le produit est en panne ➜ promo HG obligatoire.</li>
+          <li>✅ Confirmer que le produit est déjà en panne avant la souscription.</li>
+          <li>✅ Faire un 1er filtering payant à 9€99</li>
+          <li>💬 Si non résolue alors proposer la promotion Hors Garantie applicable uniquement si le client s’abonne à DartyMax.</li>
+          <li>📝 Souscrire le client à DartyMax puis traiter la prise en charge en Hors Garantie</li>
+          <li>❌ Si le client refuse de s’abonner, la prise en charge se fait alors au tarif classique Hors Garantie, sans promotion.</li>
         </ul>
-
-        <h3>Client déjà DartyMax</h3>
+        <h3>📌 Client DÉJÀ ABONNÉ à DartyMax</h3>
         <ul>
-          <li>Contrôler la <strong>facture</strong> et le <strong>Check-Up</strong>.</li>
-          <li>Si manquant 👉 proposer le <strong>tarif remisé</strong>.</li>
-          <li>Planifier un <strong>appel Check-Up</strong>.</li>
+          <li>🧾 Contrôler la présence de la facture. Si absente 👉 proposer le tarif HG ultra remisé (hors CGS).</li>
+          <li>📞 Vérifier que l’appel Check-Up a été réalisé si la panne est dans les 30 jours. Si manquant 👉 même tarif remisé.</li>
+          <li>👉 Programmer un RDV Check-Up pour garantir la future prise en charge des autres produits du parc.</li>
         </ul>
       </article>
     </section>
 
-    <!-- Navigation -->
     <nav class="pager">
       <a href="index.html">🏠 Retour à l’accueil</a>
     </nav>
