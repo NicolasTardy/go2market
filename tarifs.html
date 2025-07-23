@@ -12,6 +12,8 @@
       --light-bg: #f9f9f9;
       --text-color: #222;
       --highlight-blue: #e9f5ff;
+      --promo-non-client: #fff3cd;
+      --promo-client: #e2f0d9;
     }
 
     body {
@@ -90,7 +92,6 @@
 
     .table-wrapper {
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
       border-radius: 0.5rem;
     }
 
@@ -117,17 +118,12 @@
       z-index: 1;
     }
 
-    table.tarif-table tbody tr:nth-child(even) {
-      background-color: #f9fbfd;
+    .non-client {
+      background-color: var(--promo-non-client);
     }
 
-    th:nth-child(1), td:nth-child(1) { width: 140px; }
-    th:nth-child(2), td:nth-child(2) { width: 200px; }
-
-    td:nth-child(3),
-    td:nth-child(4),
-    td:nth-child(7) {
-      white-space: nowrap;
+    .client {
+      background-color: var(--promo-client);
     }
 
     .note {
@@ -206,41 +202,41 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr class="non-client">
             <td>IAD<br />(Intervention à domicile)</td>
             <td>Client non DartyMax<br />qui souscrit via la promo HG</td>
             <td><strong>89,99 €</strong></td>
             <td>Offert</td>
             <td>À charge</td>
             <td>−X €, X = montant du bonus Qualirépar<br />(si éligible)</td>
-            <td>39,99 € à 59,99 € + P-D</td>
+            <td>39,99 € à 59,99 € + Pièces détachées</td>
           </tr>
-          <tr>
+          <tr class="non-client">
             <td>ATL<br />(Atelier / Comptoir)</td>
             <td>Client non DartyMax<br />qui souscrit via la promo HG</td>
             <td><strong>49,98 €</strong></td>
             <td>Offert</td>
             <td>Offert</td>
             <td>Inclus dans la promo<br />et utilisé comme moyen de paiement</td>
-            <td>39,99 € à 59,99 €</td>
+            <td>49,98 €</td>
           </tr>
-          <tr>
+          <tr class="client">
             <td>IAD</td>
             <td>Déjà abonné DartyMax<br />mais non conforme aux CGS</td>
-            <td><strong>60 € à 65 €</strong></td>
-            <td>Offert</td>
+            <td><strong>Offert</strong></td>
+            <td>De 50 € à 60 €</td>
             <td>Offert</td>
             <td>Non concerné (lot 1)</td>
-            <td>60 € à 65 €</td>
+            <td>De 50 € à 60 €</td>
           </tr>
-          <tr>
+          <tr class="client">
             <td>ATL</td>
             <td>Déjà abonné DartyMax<br />mais non conforme aux CGS</td>
             <td><strong>49,98 €</strong></td>
             <td>Offert</td>
             <td>Offert</td>
             <td>Inclus dans la promo<br />et utilisé comme moyen de paiement</td>
-            <td>39,99 € à 59,99 €</td>
+            <td>49,98 €</td>
           </tr>
         </tbody>
       </table>
