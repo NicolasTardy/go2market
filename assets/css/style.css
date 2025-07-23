@@ -369,3 +369,37 @@ footer a:hover {
   .grid3 { grid-template-columns: 1fr; }
   .content { padding: 0 1rem; }
 }
+.download-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+  justify-items: center;
+  margin-top: 2.5rem;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.download-link {
+  display: block;
+  width: 220px;
+  height: 60px;
+  line-height: 60px;
+  background: #27ae60;
+  color: white;
+  text-align: center;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: var(--shadow-glow);
+  transition: var(--transition);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.download-link:hover {
+  background: #219150;
+  transform: translateY(-2px);
+}
