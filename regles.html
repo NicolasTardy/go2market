@@ -138,19 +138,23 @@
       background-color: #003a9b;
     }
 
+    .download-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
     .download-link {
-      display: block;
-      text-align: center;
-      margin-top: 1.5rem;
       text-decoration: none;
       background: #27ae60;
       color: white;
-      padding: 1rem 1.5rem;
+      padding: 1rem 1.2rem;
       border-radius: 8px;
       font-weight: 500;
-      max-width: 280px;
-      margin-left: auto;
-      margin-right: auto;
+      flex: 1 1 200px;
+      text-align: center;
     }
 
     .download-link:hover {
@@ -198,7 +202,14 @@
     <div class="reminder">📱 Des QR codes sont disponibles en magasin pour prendre RDV immédiatement. Pensez à les utiliser ou les faire flasher au client !</div>
 
     <a class="back-link" href="index.html">← Retour à l'accueil</a>
-    <a class="download-link" href="assets/files/QRcode.pdf" download>📥 Télécharger l’ILV avec le QR Code</a>
+
+    <div class="download-buttons">
+  <a class="download-link" href="assets/files/QRcode1.pdf" download>📥 Télécharger QR Code 1</a>
+  <a class="download-link" href="assets/files/QRcode2.pdf" download>📥 Télécharger QR Code 2</a>
+  <a class="download-link" href="assets/files/QRcode3.pdf" download>📥 Télécharger QR Code 3</a>
+  <a class="download-link" href="assets/files/QRcode4.pdf" download>📥 Télécharger QR Code 4</a>
+    </div>
   </div>
+
 </body>
 </html>
