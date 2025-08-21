@@ -32,12 +32,9 @@
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     }
 
+    /* En-tête simplifié (sans zone de téléchargement) */
     .header-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 1rem;
+      text-align: center;
       margin-bottom: 1rem;
     }
 
@@ -45,33 +42,6 @@
       font-size: 2rem;
       color: var(--darty-blue);
       margin: 0;
-      flex: 1;
-    }
-
-    .download-section {
-      text-align: right;
-      max-width: 280px;
-    }
-
-    .download-section p {
-      font-size: 0.9rem;
-      color: #555;
-      margin: 0 0 0.5rem;
-    }
-
-    .download-section a {
-      display: inline-block;
-      text-decoration: none;
-      background: var(--darty-blue);
-      color: white;
-      padding: 0.6rem 1rem;
-      border-radius: 8px;
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-
-    .download-section a:hover {
-      background-color: #003a9b;
     }
 
     p.subtext {
@@ -173,19 +143,12 @@
 
     <div class="header-row">
       <h1>💰 Tarifs Hors Garantie – Offre promo ⭐</h1>
-      <div class="download-section">
-        <p>
-          Attention ces tarifs promos sont valides durant les périodes de promotions,<br />
-          demandez à vos managers les dates de début et de fin
-        </p>
-        <a href="/assets/files/tarifs-hors-cgs.pdf" download>📥 Télécharger les tarifs</a>
-      </div>
     </div>
 
-    <p class="subtext">Une remise immédiate + DartyMax pour demain</p>
+    <p class="subtext">Une remise immédiate</p>
 
     <div class="intro-box">
-      💰 <strong>L’offre promo HG/Dmax</strong> permet de réparer à prix réduit et de protéger pour la suite. Une offre <em>canon</em> à présenter à tous nos clients concernés !
+  <strong>Pensez à vérifier les dates de validité des offres en cours</strong>
     </div>
 
     <div class="table-wrapper">
@@ -197,8 +160,8 @@
             <th>Tarif diagnostic / prise en charge</th>
             <th>Forfait réparation</th>
             <th>Pièces détachées (P-D)</th>
-            <th>Qualirépar</th>
-            <th>Total prix estimé</th>
+            <th>QualiRépar</th>
+            <th>Total prix estimé à charge pour le client</th>
           </tr>
         </thead>
         <tbody>
@@ -207,44 +170,40 @@
             <td>Client non DartyMax<br />qui souscrit via la promo HG</td>
             <td><strong>89,99 €</strong></td>
             <td>Offert</td>
-            <td>À charge</td>
-            <td>−X €, X = montant du bonus Qualirépar<br />(si éligible)</td>
+            <td>À charge pour le client</td>
+            <td>Le montant du bonus QualiRépar est déduit de la facture <br />(si éligible)</td>
             <td>39,99 € à 59,99 € + Pièces détachées</td>
           </tr>
           <tr class="non-client">
             <td>ATL<br />(Atelier / Comptoir)</td>
             <td>Client non DartyMax<br />qui souscrit via la promo HG</td>
             <td><strong>49,98 €</strong></td>
+            <td>Couvert par le bonus</td>
             <td>Offert</td>
-            <td>Offert</td>
-            <td>Inclus dans la promo<br />et utilisé comme moyen de paiement</td>
+            <td>Inclus dans la promo<br />couvre le montant du forfait réparation</td>
             <td>49,98 €</td>
           </tr>
           <tr class="client">
             <td>IAD</td>
             <td>Déjà abonné DartyMax<br />mais non conforme aux CGS</td>
             <td><strong>Offert</strong></td>
-            <td>De 50 € à 60 €</td>
+            <td>De 60 € à 65 €</td>
             <td>Offert</td>
-            <td>Non concerné (lot 1)</td>
-            <td>De 50 € à 60 €</td>
+            <td>Non concerné pour le moment</td>
+            <td>De 60 € à 65 €</td>
           </tr>
           <tr class="client">
             <td>ATL</td>
             <td>Déjà abonné DartyMax<br />mais non conforme aux CGS</td>
             <td><strong>49,98 €</strong></td>
+            <td>Couvert par le bonus </td>
             <td>Offert</td>
-            <td>Offert</td>
-            <td>Inclus dans la promo<br />et utilisé comme moyen de paiement</td>
+            <td>Inclus dans la promo<br />couvre le montant du forfait réparation</td>
             <td>49,98 €</td>
           </tr>
         </tbody>
       </table>
     </div>
-
-    <p class="note">
-      <strong>P-D</strong> : pièces détachées. Les montants “−X €” correspondent au bonus Qualirépar déduit du prix final lorsque le produit est éligible.
-    </p>
 
     <a class="back-link" href="index.html">← Retour à l’accueil</a>
   </div>
