@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projection de Revenus d'Assurance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
+        }
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        /* Style pour rendre le nom du produit sticky et z-index plus haut */
+        .sticky-col {
+            position: sticky;
+            left: 0;
+            z-index: 20;
+            background-color: white; /* Assure que le fond reste blanc lors du défilement */
+        }
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .cf-total-cell {
+            min-width: 60px; /* Assure une largeur minimale pour les cellules mensuelles */
+        }
+        /* Classe pour aligner les métriques de résultats */
+        .result-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.25rem 0;
+        }
+        .result-label {
+            font-weight: 500;
+        }
+        .result-value {
+            font-weight: 700;
+            text-align: right;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6 flex items-center">
+            <svg class="w-8 h-8 mr-3 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+            Projection de Rentabilité des Offres d'Assurance
+        </h1>
+        <p class="text-gray-600 mb-8">
+            Ajustez les variables pour comparer la rentabilité nette de l'Offre 1 (AS) et de l'Offre 2 (AP). 
+            <span class="font-bold text-red-600">Le calcul est basé sur 4 ans (48 mois de ventes continues).</span>
+        </p>
+
+        <!-- Configuration Globale -->
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4 pt-4 border-t border-gray-300">Variables Globales</h2>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            
+            <!-- Taux d'Actualisation -->
+            <div class="bg-yellow-50 p-4 card col-span-1 border border-yellow-300">
+                <label for="discountRate" class="block text-sm font-medium text-gray-700">Taux d'Actualisation Annuel (%)</label>
+                <input type="number" id="discountRate" value="5" step="0.1" min="0" class="mt-1 block w-full rounded-lg border-yellow-300 shadow-sm p-2 text-lg font-semibold border focus:ring-yellow-500 focus:border-yellow-500" oninput="calculate()">
+            </div>
+            
+            <!-- Profit Sharing Offre 1 -->
+            <div class="bg-blue-50 p-4 card col-span-1 border border-blue-200">
+                <label for="profitSharing" class="block text-sm font-medium text-blue-700">Profit Sharing Offre 1 (€/vente)</label>
+                <input type="number" id="profitSharing" value="1" step="0.01" min="0" class="mt-1 block w-full rounded-lg border-blue-300 shadow-sm p-2 text-lg font-semibold border focus:ring-blue-500 focus:border-blue-500" oninput="calculate()">
+            </div>
+
+            <!-- Taux de pose de film Wefix (Mise à jour pour l'Offre 1) -->
+            <div class="bg-blue-50 p-4 card col-span-1 border border-blue-200">
+                <label for="wefixRate" class="block text-sm font-medium text-blue-700">Taux Pose Film Wefix (%) <span class="font-bold">(Offre 1 - iPhones)</span></label>
+                <input type="number" id="wefixRate" value="70" step="1" min="0" max="100" class="mt-1 block w-full rounded-lg border-blue-300 shadow-sm p-2 text-lg font-semibold border focus:ring-blue-500 focus:border-blue-500" oninput="calculate()">
+            </div>
+
+            <!-- Montant perçu par pose Wefix (Mise à jour pour l'Offre 1) -->
+            <div class="bg-blue-50 p-4 card col-span-1 border border-blue-200">
+                <label for="wefixPrice" class="block text-sm font-medium text-blue-700">Montant Wefix (€/pose) <span class="font-bold">(Offre 1 - iPhones)</span></label>
+                <input type="number" id="wefixPrice" value="13" step="0.01" min="0" class="mt-1 block w-full rounded-lg border-blue-300 shadow-sm p-2 text-lg font-semibold border focus:ring-blue-500 focus:border-blue-500" oninput="calculate()">
+            </div>
+        </div>
+        
+        <!-- Variables par Offre (Séparées) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <!-- Offre 1 Variables (AS) -->
+            <div class="bg-blue-100/50 p-6 card border-2 border-blue-300">
+                <h3 class="text-xl font-bold text-blue-800 mb-4">Offre 1 (AS) - Variables Clés</h3>
+                <div class="space-y-4">
+                    <div class="bg-white p-3 rounded-lg shadow-sm">
+                        <label for="renunciationRate1" class="block text-sm font-medium text-gray-700">Taux de Renonciation (après 60 jours, %)</label>
+                        <input type="number" id="renunciationRate1" value="15" min="0" max="100" class="mt-1 block w-full rounded-lg border-blue-300 shadow-sm p-2 font-semibold border focus:ring-blue-500 focus:border-blue-500" oninput="calculate()">
+                    </div>
+                    <div class="bg-white p-3 rounded-lg shadow-sm">
+                        <label for="churnRate1" class="block text-sm font-medium text-gray-700">Taux de Churn (après 12 mois, %)</label>
+                        <input type="number" id="churnRate1" value="4" min="0" max="100" class="mt-1 block w-full rounded-lg border-blue-300 shadow-sm p-2 font-semibold border focus:ring-blue-500 focus:border-blue-500" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Offre 2 Variables (AP) -->
+            <div class="bg-green-100/50 p-6 card border-2 border-green-300">
+                <h3 class="text-xl font-bold text-green-800 mb-4">Offre 2 (AP) - Variables Clés</h3>
+                <div class="space-y-4">
+                    <div class="bg-white p-3 rounded-lg shadow-sm">
+                        <label for="renunciationRate2" class="block text-sm font-medium text-gray-700">Taux de Renonciation (après 60 jours, %)</label>
+                        <input type="number" id="renunciationRate2" value="10" min="0" max="100" class="mt-1 block w-full rounded-lg border-green-300 shadow-sm p-2 font-semibold border focus:ring-green-500 focus:border-green-500" oninput="calculate()">
+                    </div>
+                    <div class="bg-white p-3 rounded-lg shadow-sm">
+                        <label for="churnRate2" class="block text-sm font-medium text-gray-700">Taux de Churn (après 12 mois, %)</label>
+                        <input type="number" id="churnRate2" value="2" min="0" max="100" class="mt-1 block w-full rounded-lg border-green-300 shadow-sm p-2 font-semibold border focus:ring-green-500 focus:border-green-500" oninput="calculate()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Tableau des Produits, Taux d'Attachement, Volumes et Marges -->
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4 pt-4 border-t border-gray-300">Configuration Détaillée par Famille de Produits</h2>
+        <div class="bg-white card overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="sticky-header">
+                    <!-- NIVEAU 1 : Séparation Offre 1 / Offre 2 -->
+                    <tr>
+                        <th rowspan="2" class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider sticky-col bg-gray-100 border-b border-r border-gray-300">Famille de Produit</th>
+                        <th rowspan="2" class="px-3 py-3 text-center text-xs font-medium text-gray-700 uppercase tracking-wider bg-gray-100 border-b border-gray-300">Volume de Base <span class="font-bold">(Mensuel)</span></th>
+                        <th colspan="3" class="px-3 py-2 text-center text-sm font-bold bg-blue-100 text-blue-800 border-b border-blue-300">OFFRE 1 (AS)</th>
+                        <th colspan="3" class="px-3 py-2 text-center text-sm font-bold bg-green-100 text-green-800 border-b border-green-300">OFFRE 2 (AP)</th>
+                    </tr>
+                    <!-- NIVEAU 2 : Détails des métriques -->
+                    <tr class="bg-gray-50">
+                        <th class="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-blue-50 border-r border-blue-200">Prix/Mois (€)</th>
+                        <th class="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-blue-50 border-r border-blue-200">Taux Marge (%)</th>
+                        <th class="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-blue-50 border-r border-gray-200">Taux d'Attachement (%)</th>
+                        
+                        <th class="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-green-50 border-r border-green-200">Prix/Mois (€)</th>
+                        <th class="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-green-50 border-r border-green-200">Taux Marge (%)</th>
+                        <th class="px-3 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider bg-green-50">Taux d'Attachement (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="productConfig" class="bg-white divide-y divide-gray-200">
+                    <!-- Data rows injected by JS -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Résultats de la Projection -->
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4 pt-8 border-t border-gray-300 mt-8">Résultats Consolides (Projection sur 4 Ans - Cumulatif)</h2>
+        <p class="text-sm italic text-gray-600 mb-4">Les montants annuels sont cumulatifs depuis le début de la simulation (Mois 1).</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Offre 1 (AS) Results -->
+            <div class="bg-blue-50 border-2 border-blue-400 p-6 card">
+                <h3 class="text-xl font-bold text-blue-900 mb-4">Offre 1 (AS) - Détail Financier</h3>
+                <div class="space-y-2 text-sm">
+                    <p class="result-metric text-base text-gray-800"><span class="result-label">Total Ventes (48 mois):</span> <span id="totalSales1" class="result-value font-extrabold">0</span></p>
+                    <p class="result-metric text-gray-700"><span class="result-label">Total Clients Effectifs (après Renonciation):</span> <span id="effectiveClients1" class="result-value font-medium">0</span></p>
+                    <hr class="border-blue-200">
+                    <p class="result-metric font-bold text-green-700 text-xl"><span class="result-label">Marge Totale Nette (Non Actualisée) :</span> <span id="totalMargin1" class="result-value font-extrabold text-xl">0,00 €</span></p>
+                    
+                    <!-- Détails de la Marge - Alignement ML-4 -->
+                    <p class="result-metric text-yellow-700 italic ml-4"><span class="result-label">Marge Avancée (12 mois, totale):</span> <span id="upfrontMargin1" class="result-value font-medium">0,00 €</span></p>
+                    <p class="result-metric text-yellow-700 italic ml-4"><span class="result-label">Air Time (Mois 13/14, totale):</span> <span id="tailMargin1" class="result-value font-medium">0,00 €</span></p>
+                    
+                    <p class="result-metric font-bold text-purple-700 text-lg"><span class="result-label">Profit Sharing Total :</span> <span id="totalProfitSharing" class="result-value font-extrabold">0,00 €</span></p>
+                    
+                    <!-- Revenu Wefix -->
+                    <p class="result-metric font-bold text-red-700 text-lg"><span class="result-label">Revenus Wefix Total :</span> <span id="totalWefixRevenue" class="result-value font-extrabold">0,00 €</span></p>
+                    
+                    <hr class="border-blue-400">
+                    
+                    <!-- LIGNE CLÉ : Encaissement Initial au moment de la vente -->
+                    <p class="result-metric font-black text-red-600 text-xl border-t pt-2 border-dashed border-red-300">
+                        <span class="result-label">Encaissement Initial M1 (Marge Avancée + P.S + Wefix) :</span> 
+                        <span id="initialCashIn1" class="result-value font-black">0,00 €</span>
+                    </p>
+
+                    <p class="result-metric font-black text-blue-900 mt-4 text-2xl"><span class="result-label">Gain Total Net (Marge + P.S + Wefix):</span> <span id="totalNetGain1" class="result-value font-black">0,00 €</span></p>
+                </div>
+                
+                <!-- Résultat Annuel Cumulatif Offre 1 -->
+                <h4 class="text-lg font-bold text-gray-700 mt-6 mb-2 pt-2 border-t border-gray-300">Gains Cumulés (Non Actualisés)</h4>
+                <div class="space-y-1 text-sm">
+                    <p class="result-metric font-medium text-gray-800"><span class="result-label">Année 1 (M1-M12):</span> <span id="cumulGain1_1" class="result-value font-semibold text-base">0,00 €</span></p>
+                    <p class="result-metric font-medium text-gray-800"><span class="result-label">Année 2 (M1-M24):</span> <span id="cumulGain1_2" class="result-value font-semibold text-base">0,00 €</span></p>
+                    <p class="result-metric font-medium text-gray-800"><span class="result-label">Année 3 (M1-M36):</span> <span id="cumulGain1_3" class="result-value font-semibold text-base">0,00 €</span></p>
+                    <p class="result-metric font-medium text-gray-800"><span class="result-label">Année 4 (M1-M48):</span> <span id="cumulGain1_4" class="result-value font-semibold text-base">0,00 €</span></p>
+                </div>
+
+                <!-- NOUVEAU: VAN Totale -->
+                <hr class="border-blue-400 mt-4">
+                <p class="result-metric font-black text-red-700 mt-2 text-2xl">
+                    <span class="result-label">Valeur Actuelle Nette (VAN) :</span> 
+                    <span id="totalNPV1" class="result-value font-black">0,00 €</span>
+                </p>
+            </div>
+
+            <!-- Offre 2 (AP) Results -->
+            <div class="bg-green-50 border-2 border-green-400 p-6 card">
+                <h3 class="text-xl font-bold text-green-900 mb-4">Offre 2 (AP) - Détail Financier</h3>
+                <div class="space-y-2 text-sm">
+                    <p class="result-metric text-base text-gray-800"><span class="result-label">Total Ventes (48 mois):</span> <span id="totalSales2" class="result-value font-extrabold text-base">0</span></p>
+                    <p class="result-metric text-gray-700"><span class="result-label">Total Clients Effectifs (après Renonciation):</span> <span id="effectiveClients2" class="result-value font-medium">0</span></p>
+                    <hr class="border-green-300">
+                    <p class="result-metric font-bold text-blue-700 text-xl"><span class="result-label">Marge Totale Nette (Non Actualisée) :</span> <span id="totalMargin2" class="result-value font-extrabold text-xl">0,00 €</span></p>
+                    
+                    <!-- Harmonisation de la mise en page (Placeholders) -->
+                    <p class="result-metric text-sm italic ml-4 text-gray-500"><span class="result-label">Marge Avancée (12 mois, totale):</span> <span class="result-value font-medium text-gray-400">N/A (0,00 €)</span></p>
+                    <p class="result-metric text-sm italic ml-4 text-gray-500"><span class="result-label">Air Time (Mois 13/14, totale):</span> <span class="result-value font-medium text-gray-400">N/A (0,00 €)</span></p>
+                    <p class="result-metric font-bold text-gray-500 text-lg"><span class="result-label">Profit Sharing Total :</span> <span class="result-value font-extrabold text-gray-400">N/A (0,00 €)</span></p>
+                    <p class="result-metric font-bold text-gray-500 text-lg"><span class="result-label">Revenus Wefix Total :</span> <span class="result-value font-extrabold text-gray-400">N/A (0,00 €)</span></p>
+                    
+                    <hr class="border-green-400">
+
+                    <!-- LIGNE CLÉ : Encaissement Initial au moment de la vente (Placeholder) -->
+                    <p class="result-metric font-black text-gray-600 text-xl border-t pt-2 border-dashed border-gray-300">
+                        <span class="result-label">Encaissement Initial M1 :</span> 
+                        <span class="result-value font-black text-gray-400">N/A (0,00 €)</span>
+                    </p>
+
+                    <p class="result-metric font-black text-green-900 mt-4 text-2xl"><span class="result-label">Gain Total Net (Marge seule):</span> <span id="totalNetGain2" class="result-value font-black">0,00 €</span></p>
+                </div>
+
+                <!-- Résultat Annuel Cumulatif Offre 2 -->
+                <h4 class="text-lg font-bold text-gray-700 mt-6 mb-2 pt-2 border-t border-gray-300">Gains Cumulés (Non Actualisés)</h4>
+                <div class="space-y-1 text-sm">
+                    <p class="result-metric font-medium text-gray-800"><span class="result-label">Année 1 (M1-M12):</span> <span id="cumulGain2_1" class="result-value font-semibold text-base">0,00 €</span></p>
+                    <p class="result-metric font-medium text-gray-800"><span class="result-label">Année 2 (M1-M24):</span> <span id="cumulGain2_2" class="result-value font-semibold text-base">0,00 €</span></p>
+                    <p class="result-metric font-medium text-gray-800"><span class="result-label">Année 3 (M1-M36):</span> <span id="cumulGain2_3" class="result-value font-semibold text-base">0,00 €</span></p>
+                    <p class="result-metric font-medium text-gray-800"><span class="result-label">Année 4 (M1-M48):</span> <span id="cumulGain2_4" class="result-value font-semibold text-base">0,00 €</span></p>
+                </div>
+                
+                <!-- NOUVEAU: VAN Totale -->
+                <hr class="border-green-400 mt-4">
+                <p class="result-metric font-black text-red-700 mt-2 text-2xl">
+                    <span class="result-label">Valeur Actuelle Nette (VAN) :</span> 
+                    <span id="totalNPV2" class="result-value font-black">0,00 €</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Synthèse de Comparaison VAN -->
+        <div id="comparisonSummary" class="mt-8 p-6 text-center card bg-gray-800 text-white border-2 border-red-500">
+            <p class="text-xl font-bold">SYNTHÈSE DE RENTABILITÉ ACTUALISÉE (VAN)</p>
+            <p id="vanWinnerMessage" class="text-3xl font-extrabold mt-2 text-yellow-300">Veuillez effectuer le calcul.</p>
+            <p class="text-sm mt-1">Comparaison basée sur la Valeur Actuelle Nette de tous les flux de trésorerie accumulés sur l'horizon de 61 mois.</p>
+        </div>
+        
+        <!-- NOUVEAU: Analyse Détaillée du Cash Flow -->
+        <h2 class="text-2xl font-semibold text-gray-800 mb-4 pt-8 border-t border-gray-300 mt-8">Analyse Détaillée des Flux de Trésorerie (Cash Flow)</h2>
+        <p class="text-gray-600 mb-4">Affichage du flux de marge total par mois (sur 61 mois) pour toutes les familles de produits.</p>
+        
+        <div id="cashFlowDetail" class="bg-white card overflow-x-auto">
+            <!-- Tableaux de Cash Flow insérés ici -->
+        </div>
+
+
+    </div>
+
+    <script>
+        // Définition initiale des produits et de leurs valeurs
+        const products = [
+            // L'index 0 est 'iPhones', utilisé pour le calcul Wefix
+            { name: "iPhones", volume: 1000, price1: 19, margin1: 37, ta1: 25, price2: 12, margin2: 35, ta2: 30 },
+            { name: "MacBook", volume: 1000, price1: 14, margin1: 37, ta1: 12, price2: 12, margin2: 35, ta2: 15 },
+            { name: "AirPods", volume: 1000, price1: 8, margin1: 37, ta1: 9, price2: 6, margin2: 35, ta2: 15 },
+            { name: "iPads", volume: 1000, price1: 12, margin1: 37, ta1: 12, price2: 10, margin2: 35, ta2: 15 },
+            { name: "Apple Watch", volume: 1000, price1: 8, margin1: 37, ta1: 15, price2: 6, margin2: 35, ta2: 20 },
+        ];
+
+        const DURATION_CONTRACT = 14; 
+        const MAX_SALES_MONTHS = 48; // Période de vente (Années 1 à 4)
+        const MAX_ANALYSIS_MONTHS = 61; // M1 à M61 (index 0 à 60) - pour capturer la totalité des paiements des 48 cohortes
+
+        // Fonction pour insérer la configuration produit dans le tableau HTML
+        function setupProductConfig() {
+            const container = document.getElementById('productConfig');
+            container.innerHTML = products.map((p, index) => `
+                <tr class="hover:bg-gray-100">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 sticky-col border-r border-gray-300">${p.name}</td>
+                    <td class="p-2">
+                        <input type="number" id="volume_${index}" value="${p.volume}" min="1" class="product-input w-full text-center p-1 border rounded" oninput="calculate()">
+                    </td>
+                    <td class="p-2 bg-blue-50 border-l border-r border-blue-200">
+                        <input type="number" id="price1_${index}" value="${p.price1}" min="0.01" step="0.01" class="product-input w-full text-center p-1 border rounded" oninput="calculate()">
+                    </td>
+                    <td class="p-2 bg-blue-50 border-r border-blue-200">
+                        <input type="number" id="margin1_${index}" value="${p.margin1}" min="0" max="100" class="product-input w-full text-center p-1 border rounded" oninput="calculate()">
+                    </td>
+                    <td class="p-2 bg-blue-50 border-r border-gray-200">
+                        <input type="number" id="ta1_${index}" value="${p.ta1}" min="0" max="100" class="product-input w-full text-center p-1 border rounded" oninput="calculate()">
+                    </td>
+                    <td class="p-2 bg-green-50 border-l border-r border-green-200">
+                        <input type="number" id="price2_${index}" value="${p.price2}" min="0.01" step="0.01" class="product-input w-full text-center p-1 border rounded" oninput="calculate()">
+                    </td>
+                    <td class="p-2 bg-green-50 border-r border-green-200">
+                        <input type="number" id="margin2_${index}" value="${p.margin2}" min="0" max="100" class="product-input w-full text-center p-1 border rounded" oninput="calculate()">
+                    </td>
+                    <td class="p-2 bg-green-50">
+                        <input type="number" id="ta2_${index}" value="${p.ta2}" min="0" max="100" class="product-input w-full text-center p-1 border rounded" oninput="calculate()">
+                    </td>
+                </tr>
+            `).join('');
+        }
+        
+        // Fonction pour calculer la Valeur Actuelle Nette (NPV)
+        function calculateNPV(cashFlows, monthlyDiscountRate) {
+            let npv = 0;
+            // t=0 représente le Mois 1 (index 0)
+            for (let t = 0; t < cashFlows.length; t++) {
+                // Utilisation de la formule d'actualisation: CF_t / (1 + r)^t
+                npv += cashFlows[t] / Math.pow(1 + monthlyDiscountRate, t);
+            }
+            return npv;
+        }
+        
+        // Calcule les résultats cumulés jusqu'à un mois donné (index 0 à N-1)
+        function getCumulativeResults(cfArray, upToMonthIndex, monthlyRate) {
+            let cumulativeNetGain = 0;
+            let cumulativeNPV = 0;
+            
+            // L'horizon temporel de l'index va de 0 à upToMonthIndex (M1 à M_upToMonthIndex)
+            for (let t = 0; t <= upToMonthIndex; t++) {
+                const cf = cfArray[t] || 0; 
+                cumulativeNetGain += cf;
+                cumulativeNPV += cf / Math.pow(1 + monthlyRate, t);
+            }
+            return { netGain: cumulativeNetGain, npv: cumulativeNPV };
+        }
+
+        // Calcule les totaux par année (non actualisés) pour le tableau détaillé du Cash Flow
+        function calculateAnnualTotals(cfArray) {
+            const annualTotals = {};
+            for (let y = 1; y <= 4; y++) {
+                let sum = 0;
+                const startIdx = (y - 1) * 12; // M1: 0, M13: 12, M25: 24, M37: 36
+                const endIdx = startIdx + 11; // M12: 11, M24: 23, M36: 35, M48: 47
+                
+                // On s'arrête au MAX_SALES_MONTHS (M48, index 47)
+                for (let i = startIdx; i <= endIdx && i < MAX_SALES_MONTHS; i++) {
+                    sum += cfArray[i] || 0;
+                }
+                annualTotals[`A${y}`] = sum;
+            }
+            return annualTotals;
+        }
+
+
+        // Fonction pour générer les détails du Cash Flow (TOTAUX)
+        function generateCashFlowDetails(CF1_total, CF2_total, monthlyRate, annualTotals1, annualTotals2) {
+            
+            // Calculer la VAN pour les flux totaux (sur tout l'horizon d'analyse)
+            const NPV1_total = calculateNPV(CF1_total, monthlyRate);
+            const NPV2_total = calculateNPV(CF2_total, monthlyRate);
+
+            // Génération des en-têtes de mois pour l'affichage
+            const monthHeaders = Array.from({ length: MAX_ANALYSIS_MONTHS }, (_, i) => {
+                const month = i + 1;
+                let className = '';
+                if (month % 12 === 0) {
+                    className = 'bg-gray-200 font-bold';
+                }
+                return `<th class="px-2 py-2 text-center text-xs font-medium text-gray-500 uppercase ${className} cf-total-cell">M${month}</th>`;
+            }).join('');
+            
+            // Génération des lignes de flux
+            const cfRow1 = CF1_total.map((cf, i) => {
+                const month = i + 1;
+                let className = '';
+                if (month % 12 === 0) {
+                    className = 'bg-blue-200 font-bold';
+                }
+                return `<td class="px-2 py-2 text-sm text-gray-900 font-medium ${className} cf-total-cell">${formatCurrency(cf, 0)}</td>`;
+            }).join('');
+            
+            const cfRow2 = CF2_total.map((cf, i) => {
+                const month = i + 1;
+                let className = '';
+                if (month % 12 === 0) {
+                    className = 'bg-green-200 font-bold';
+                }
+                return `<td class="px-2 py-2 text-sm text-gray-900 font-medium ${className} cf-total-cell">${formatCurrency(cf, 0)}</td>`;
+            }).join('');
+
+            // Annual Totals HTML for Offre 1
+            const annualCells1 = `<td class="px-2 py-2 text-sm text-gray-900 font-extrabold bg-blue-300 cf-total-cell">${formatCurrency(annualTotals1.A1, 0)}</td>` +
+                                 `<td class="px-2 py-2 text-sm text-gray-900 font-extrabold bg-blue-300 cf-total-cell">${formatCurrency(annualTotals1.A2, 0)}</td>` +
+                                 `<td class="px-2 py-2 text-sm text-gray-900 font-extrabold bg-blue-300 cf-total-cell">${formatCurrency(annualTotals1.A3, 0)}</td>` +
+                                 `<td class="px-2 py-2 text-sm text-gray-900 font-extrabold bg-blue-300 border-r border-blue-400 cf-total-cell">${formatCurrency(annualTotals1.A4, 0)}</td>`;
+                                 
+            // Annual Totals HTML for Offre 2
+            const annualCells2 = `<td class="px-2 py-2 text-sm text-gray-900 font-extrabold bg-green-300 cf-total-cell">${formatCurrency(annualTotals2.A1, 0)}</td>` +
+                                 `<td class="px-2 py-2 text-sm text-gray-900 font-extrabold bg-green-300 cf-total-cell">${formatCurrency(annualTotals2.A2, 0)}</td>` +
+                                 `<td class="px-2 py-2 text-sm text-gray-900 font-extrabold bg-green-300 cf-total-cell">${formatCurrency(annualTotals2.A3, 0)}</td>` +
+                                 `<td class="px-2 py-2 text-sm text-gray-900 font-extrabold bg-green-300 border-r border-green-400 cf-total-cell">${formatCurrency(annualTotals2.A4, 0)}</td>`;
+
+
+            // HTML de la table Cash Flow
+            let html = `
+                <div class="space-y-4 p-4">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <!-- Ligne 1: Titre Principal -->
+                            <tr>
+                                <th class="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase sticky-col bg-gray-100">Flux (en €)</th>
+                                <th colspan="4" class="px-3 py-2 text-center text-xs font-bold text-gray-800 uppercase bg-gray-300 border-r border-gray-400">TOTAL ANNÉE (Non Actualisé)</th>
+                                ${monthHeaders}
+                                <th class="px-3 py-2 text-center text-xs font-bold text-gray-800 uppercase bg-gray-100">TOTAL VAN (M1-M61)</th>
+                            </tr>
+                            <!-- Ligne 2: Sous-Titres Annuels -->
+                            <tr>
+                                <th class="px-3 py-2 text-center text-xs font-medium text-gray-500 uppercase sticky-col bg-gray-100 border-t border-gray-200">Détail</th>
+                                <th class="px-2 py-2 text-center text-xs font-bold text-gray-800 uppercase bg-gray-300">A1</th>
+                                <th class="px-2 py-2 text-center text-xs font-bold text-gray-800 uppercase bg-gray-300">A2</th>
+                                <th class="px-2 py-2 text-center text-xs font-bold text-gray-800 uppercase bg-gray-300">A3</th>
+                                <th class="px-2 py-2 text-center text-xs font-bold text-gray-800 uppercase bg-gray-300 border-r border-gray-400">A4</th>
+                                ${monthHeaders}
+                                <th class="px-3 py-2 text-center text-xs font-bold text-gray-800 uppercase bg-gray-100 border-t border-gray-200">NPV</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            <!-- Ligne Cash Flow Offre 1 -->
+                            <tr class="bg-blue-50">
+                                <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold text-blue-900 sticky-col">CF Total Offre 1 (AS)</td>
+                                ${annualCells1}
+                                ${cfRow1}
+                                <td class="px-3 py-2 text-sm font-bold text-blue-900 bg-blue-100">${formatCurrency(NPV1_total)}</td>
+                            </tr>
+                            <!-- Ligne Cash Flow Offre 2 -->
+                            <tr class="bg-green-50">
+                                <td class="px-3 py-2 whitespace-nowrap text-sm font-semibold text-green-900 sticky-col">CF Total Offre 2 (AP)</td>
+                                ${annualCells2}
+                                ${cfRow2}
+                                <td class="px-3 py-2 text-sm font-bold text-green-900 bg-green-100">${formatCurrency(NPV2_total)}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            return html;
+        }
+
+
+        // Fonction principale de calcul
+        function calculate() {
+            // 1. Récupération des variables globales
+            const R1_rate = (parseFloat(document.getElementById('renunciationRate1').value) || 0) / 100;
+            const R2_rate = (parseFloat(document.getElementById('renunciationRate2').value) || 0) / 100;
+            const C1_rate = (parseFloat(document.getElementById('churnRate1').value) || 0) / 100;
+            const C2_rate = (parseFloat(document.getElementById('churnRate2').value) || 0) / 100;
+            const PS_unit = parseFloat(document.getElementById('profitSharing').value) || 0;
+            
+            // Variables Wefix 
+            const WEFIX_rate = (parseFloat(document.getElementById('wefixRate').value) || 0) / 100;
+            const WEFIX_price = parseFloat(document.getElementById('wefixPrice').value) || 0;
+
+            const M1_tail_rate = 0.10; // Marge 10% Offre 1 après 12 mois (fixe)
+            
+            // Taux d'Actualisation
+            const annualRate = (parseFloat(document.getElementById('discountRate').value) || 0) / 100;
+            const monthlyRate = annualRate / 12; // Taux mensuel
+
+            // 2. Initialisation des totaux globaux (Non Actualisés)
+            let totalSales1 = 0;
+            let totalSales2 = 0;
+            let effectiveClients1 = 0;
+            let effectiveClients2 = 0;
+            
+            let totalMargin1 = 0;
+            let upfrontMargin1 = 0;
+            let tailMargin1 = 0;
+            let totalMargin2 = 0;
+            
+            let totalProfitSharing = 0;
+            let totalWefixRevenue = 0; // Total Wefix Revenue
+
+            // Initialisation des tableaux de Cash Flow Totaux (sur 61 mois)
+            let CF1_total = new Array(MAX_ANALYSIS_MONTHS).fill(0);
+            let CF2_total = new Array(MAX_ANALYSIS_MONTHS).fill(0);
+
+            products.forEach((p, index) => {
+                // Mise à jour des données du produit 
+                const V = parseFloat(document.getElementById(`volume_${index}`).value) || 0;
+                const M1_rate_product = (parseFloat(document.getElementById(`margin1_${index}`).value) || 0) / 100;
+                const M2_rate_product = (parseFloat(document.getElementById(`margin2_${index}`).value) || 0) / 100;
+
+                const currentP = { ...p }; 
+                currentP.volume = V;
+                currentP.margin1 = M1_rate_product * 100;
+                currentP.margin2 = M2_rate_product * 100;
+                currentP.price1 = parseFloat(document.getElementById(`price1_${index}`).value) || 0;
+                currentP.ta1 = (parseFloat(document.getElementById(`ta1_${index}`).value) || 0) / 100;
+                currentP.price2 = parseFloat(document.getElementById(`price2_${index}`).value) || 0;
+                currentP.ta2 = (parseFloat(document.getElementById(`ta2_${index}`).value) || 0) / 100;
+                
+                
+                // --- CALCULS DES FLUX PAR COHORTE MENSUELLE ---
+                
+                // Calcul des contrats vendus et effectifs pour UNE COHORTE MENSUELLE
+                const N1_cohort = V * currentP.ta1; 
+                const N_eff1_cohort = N1_cohort * (1 - R1_rate); 
+                const N_tail1_cohort = N_eff1_cohort * (1 - C1_rate); 
+                
+                const N2_cohort = V * currentP.ta2; 
+                const N_eff2_cohort = N2_cohort * (1 - R2_rate); 
+                const N_tail2_cohort = N_eff2_cohort * (1 - C2_rate); 
+                
+                // Calcul des marges pour UNE COHORTE MENSUELLE
+                const M_upfront1_cohort = N_eff1_cohort * currentP.price1 * M1_rate_product * 12;
+                const M_tail1_monthly = N_tail1_cohort * currentP.price1 * M1_tail_rate;
+
+                const M_monthly2_base = N_eff2_cohort * currentP.price2 * M2_rate_product;
+                const M_monthly2_tail = N_tail2_cohort * currentP.price2 * M2_rate_product;
+                const PS_cohort = N1_cohort * PS_unit;
+
+
+                // BOUCLE SUR LES 48 COHORTES (k = index de 0 à 47, soit M1 à M48 de vente)
+                for (let k = 0; k < MAX_SALES_MONTHS; k++) {
+                    
+                    // Total Sales / PS accumulation (sur 48 mois)
+                    totalSales1 += N1_cohort;
+                    totalSales2 += N2_cohort;
+                    effectiveClients1 += N_eff1_cohort;
+                    effectiveClients2 += N_eff2_cohort;
+                    totalProfitSharing += PS_cohort;
+                    
+                    let wefixRevenue_cohort = 0; // Initialiser pour cette cohorte
+
+                    // --- CALCUL WEFIX (Uniquement pour iPhones, index 0) ---
+                    if (index === 0) {
+                        // Nombre de films posés: Clients effectifs * Taux de pose Wefix
+                        const N_wefix_effective = N_eff1_cohort * WEFIX_rate;
+                        wefixRevenue_cohort = N_wefix_effective * WEFIX_price;
+
+                        totalWefixRevenue += wefixRevenue_cohort;
+                    }
+
+
+                    // --- OFFRE 1 (AS) ---
+                    
+                    // 1. Marge Avancée + PS + Wefix (reçue au mois de la vente, index t = k)
+                    const t_upfront = k; 
+                    if (t_upfront < MAX_ANALYSIS_MONTHS) {
+                        // AJOUT du revenu Wefix au Cash Flow
+                        const cf_upfront = M_upfront1_cohort + PS_cohort + wefixRevenue_cohort; 
+                        CF1_total[t_upfront] += cf_upfront;
+                        totalMargin1 += M_upfront1_cohort;
+                        upfrontMargin1 += M_upfront1_cohort;
+                    }
+                    
+                    // 2. Marge Queue (Mois 13 et 14 de la cohorte)
+                    const t_tail_m13 = k + 12; // Mois 13 de la cohorte
+                    const t_tail_m14 = k + 13; // Mois 14 de la cohorte
+
+                    if (t_tail_m13 < MAX_ANALYSIS_MONTHS) {
+                        CF1_total[t_tail_m13] += M_tail1_monthly;
+                        totalMargin1 += M_tail1_monthly;
+                        tailMargin1 += M_tail1_monthly;
+                    }
+
+                    if (t_tail_m14 < MAX_ANALYSIS_MONTHS) {
+                        CF1_total[t_tail_m14] += M_tail1_monthly;
+                        totalMargin1 += M_tail1_monthly;
+                        tailMargin1 += M_tail1_monthly;
+                    }
+
+
+                    // --- OFFRE 2 (AP) ---
+
+                    // Boucle sur les 14 mois de la cohorte (m = 0 à 13)
+                    for (let m = 0; m < DURATION_CONTRACT; m++) {
+                        const t_analysis = k + m;
+                        
+                        if (t_analysis < MAX_ANALYSIS_MONTHS) {
+                            let cf_monthly;
+                            if (m < 12) { // Mois 1 à 12 (m=0 à 11)
+                                cf_monthly = M_monthly2_base;
+                            } else { // Mois 13 et 14 (m=12 et 13)
+                                cf_monthly = M_monthly2_tail;
+                            }
+
+                            CF2_total[t_analysis] += cf_monthly;
+                            totalMargin2 += cf_monthly;
+                        }
+                    }
+                }
+            }); // Fin du ForEach Product
+
+            // 3. Calculs finaux Globaux
+            const totalNetGain1 = totalMargin1 + totalProfitSharing + totalWefixRevenue; // Mise à jour pour inclure Wefix
+            const totalNetGain2 = totalMargin2;
+            
+            const totalNPV1 = calculateNPV(CF1_total, monthlyRate);
+            const totalNPV2 = calculateNPV(CF2_total, monthlyRate);
+
+            // Encaissement Initial (Mois 1 - inclut Marge Avancée + PS + Wefix)
+            const initialCashIn1 = CF1_total[0];
+            
+            // 4. Calcul des Totaux Cumulatifs par Année (Année 1 = M1-M12, Année 4 = M1-M48)
+            const year1_1 = getCumulativeResults(CF1_total, 11, monthlyRate); // M1-M12
+            const year2_1 = getCumulativeResults(CF1_total, 23, monthlyRate); // M1-M24
+            const year3_1 = getCumulativeResults(CF1_total, 35, monthlyRate); // M1-M36
+            const year4_1 = getCumulativeResults(CF1_total, 47, monthlyRate); // M1-M48
+
+            const year1_2 = getCumulativeResults(CF2_total, 11, monthlyRate); // M1-M12
+            const year2_2 = getCumulativeResults(CF2_total, 23, monthlyRate); // M1-M24
+            const year3_2 = getCumulativeResults(CF2_total, 35, monthlyRate); // M1-M36
+            const year4_2 = getCumulativeResults(CF2_total, 47, monthlyRate); // M1-M48
+
+            // 5. Calcul des Totaux Années pour le Cash Flow Détaillé (Marge + PS + Wefix, Non Actualisé)
+            const annualTotals1 = calculateAnnualTotals(CF1_total);
+            const annualTotals2 = calculateAnnualTotals(CF2_total);
+
+
+            // 6. Mise à jour de l'affichage
+            
+            // Offre 1 (AS)
+            document.getElementById('totalSales1').textContent = formatNumber(totalSales1, 0);
+            document.getElementById('effectiveClients1').textContent = formatNumber(effectiveClients1, 0);
+            document.getElementById('totalMargin1').textContent = formatCurrency(totalMargin1);
+            document.getElementById('upfrontMargin1').textContent = formatCurrency(upfrontMargin1);
+            document.getElementById('tailMargin1').textContent = formatCurrency(tailMargin1);
+            document.getElementById('totalProfitSharing').textContent = formatCurrency(totalProfitSharing);
+            document.getElementById('totalWefixRevenue').textContent = formatCurrency(totalWefixRevenue); 
+            document.getElementById('totalNetGain1').textContent = formatCurrency(totalNetGain1);
+            document.getElementById('initialCashIn1').textContent = formatCurrency(initialCashIn1); 
+            document.getElementById('totalNPV1').textContent = formatCurrency(totalNPV1);
+
+            document.getElementById('cumulGain1_1').textContent = formatCurrency(year1_1.netGain);
+            document.getElementById('cumulGain1_2').textContent = formatCurrency(year2_1.netGain);
+            document.getElementById('cumulGain1_3').textContent = formatCurrency(year3_1.netGain);
+            document.getElementById('cumulGain1_4').textContent = formatCurrency(year4_1.netGain);
+
+
+            // Offre 2 (AP)
+            document.getElementById('totalSales2').textContent = formatNumber(totalSales2, 0);
+            document.getElementById('effectiveClients2').textContent = formatNumber(effectiveClients2, 0);
+            document.getElementById('totalMargin2').textContent = formatCurrency(totalMargin2);
+            document.getElementById('totalNetGain2').textContent = formatCurrency(totalNetGain2);
+            document.getElementById('totalNPV2').textContent = formatCurrency(totalNPV2);
+            
+            document.getElementById('cumulGain2_1').textContent = formatCurrency(year1_2.netGain);
+            document.getElementById('cumulGain2_2').textContent = formatCurrency(year2_2.netGain);
+            document.getElementById('cumulGain2_3').textContent = formatCurrency(year3_2.netGain);
+            document.getElementById('cumulGain2_4').textContent = formatCurrency(year4_2.netGain);
+            
+            // 7. Mise à jour de la table Cash Flow Détaillée (Totaux)
+            const cashFlowContainer = document.getElementById('cashFlowDetail');
+            cashFlowContainer.innerHTML = generateCashFlowDetails(CF1_total, CF2_total, monthlyRate, annualTotals1, annualTotals2);
+
+
+            // 8. Synthèse de Comparaison VAN (Actualisée - LA CLÉ)
+            const vanWinnerMessage = document.getElementById('vanWinnerMessage');
+            if (totalNPV1 > totalNPV2) {
+                const diff = totalNPV1 - totalNPV2;
+                vanWinnerMessage.textContent = `L'Offre 1 (AS) gagne ${formatCurrency(diff)} en VAN.`;
+                vanWinnerMessage.classList.remove('text-red-300', 'text-yellow-300');
+                vanWinnerMessage.classList.add('text-green-300');
+            } else if (totalNPV2 > totalNPV1) {
+                const diff = totalNPV2 - totalNPV1;
+                vanWinnerMessage.textContent = `L'Offre 2 (AP) gagne ${formatCurrency(diff)} en VAN.`;
+                vanWinnerMessage.classList.remove('text-green-300', 'text-yellow-300');
+                vanWinnerMessage.classList.add('text-red-300');
+            } else if (totalNPV1 > 0) {
+                vanWinnerMessage.textContent = "Les deux offres ont une VAN équivalente.";
+                vanWinnerMessage.classList.remove('text-green-300', 'text-red-300');
+                vanWinnerMessage.classList.add('text-yellow-300');
+            } else {
+                 vanWinnerMessage.textContent = "Veuillez effectuer le calcul.";
+                 vanWinnerMessage.classList.remove('text-green-300', 'text-red-300');
+                 vanWinnerMessage.classList.add('text-yellow-300');
+            }
+        }
+
+        // Fonctions utilitaires de formatage
+        function formatCurrency(value, decimals = 2) {
+            if (isNaN(value) || value === null) return "0,00 €";
+            return new Intl.NumberFormat('fr-FR', {
+                style: 'currency',
+                currency: 'EUR',
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }).format(value);
+        }
+
+        function formatNumber(value, decimals = 0) {
+            if (isNaN(value) || value === null) return "0";
+            return new Intl.NumberFormat('fr-FR', {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }).format(value);
+        }
+
+        // Initialisation à l'ouverture de la page
+        window.onload = function() {
+            setupProductConfig();
+            calculate(); // Exécute le calcul initial avec les valeurs par défaut
+        };
+    </script>
+</body>
+</html>
