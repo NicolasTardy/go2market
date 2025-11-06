@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparateur de Projections de Revenus Assurances</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f7f9fb; }
+        
+        /* Styles pour les inputs */
+        .input-group { 
+            display: flex; 
+            align-items: center; 
+            margin-bottom: 8px; 
+            padding: 4px 0;
+            border-bottom: 1px dashed #e5e7eb;
+        }
+        .input-group label { 
+            flex-basis: 65%; 
+            text-align: left; 
+            padding-right: 10px; 
+            font-size: 0.875rem; 
+            color: #4b5563; 
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .input-group input { 
+            flex-basis: 35%; 
+            padding: 4px 8px; 
+            border: 1px solid #d1d5db; 
+            border-radius: 6px; 
+            text-align: right; 
+            font-size: 0.875rem; 
+            appearance: textfield; /* Fix for number arrows */
+        }
+        .input-group input::-webkit-outer-spin-button,
+        .input-group input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Codes couleurs */
+        .monthly-card { border-left: 5px solid #3b82f6; } /* Bleu pour Abonnements Mensuels */
+        .prepaid-card { border-left: 5px solid #10b981; } /* Vert pour Offres Prépayées */
+        .result-cell { font-weight: 600; text-align: right; }
+        .text-monthly { color: #3b82f6; }
+        .text-prepaid { color: #10b981; }
+        .text-xforce { color: #ef4444; } /* Rouge pour X-Force */
+        .text-profit { color: #f97316; } /* Orange pour Profit Sharing */
+        
+        /* Styles pour les onglets */
+        .tab-button {
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            border-bottom: none;
+            background-color: #e5e7eb;
+            color: #4b5563;
+        }
+        .tab-button.active {
+            background-color: #ffffff;
+            color: #1f2937;
+            border: 1px solid #d1d5db;
+            border-bottom: 1px solid #ffffff;
+        }
+        .tab-content {
+            border: 1px solid #d1d5db;
+            border-top: none;
+            border-radius: 0 8px 8px 8px;
+            padding: 1rem;
+            background-color: white;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <header class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">Comparateur de Projections de Revenus (4 Ans)</h1>
+        <p class="text-gray-600 mt-1">Saisissez les variables ci-dessous pour comparer les propositions AS et AP en temps réel.</p>
+    </header>
+
+    <div id="app" class="space-y-12">
+        <!-- Section 1: Variables Communes -->
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-semibold mb-4 text-indigo-700">1. Variables Communes (Volumes Mensuels Vendus)</h2>
+            <div id="global-volumes" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <!-- Volume Inputs will be inserted here by JS -->
+            </div>
+        </section>
+
+        <!-- Section 2: Inputs des Variables (avec Onglets) -->
+        <div class="xl:w-full space-y-4">
+            <h2 class="text-2xl font-bold text-gray-800">2. Variables des Offres</h2>
+            
+            <div class="flex space-x-1">
+                <button class="tab-button active" onclick="switchTab('AS')">PROPOSITION 1 (AS)</button>
+                <button class="tab-button" onclick="switchTab('AP')">PROPOSITION 2 (AP)</button>
+            </div>
+
+            <div id="product-inputs" class="tab-content">
+                <!-- Product Input Cards will be inserted here by JS (depending on active tab) -->
+            </div>
+        </div>
+
+        <!-- Section 3 & 4: Synthèse des Projections et Parc Client -->
+        <div class="xl:w-full space-y-8">
+            <h2 class="text-2xl font-bold text-gray-800">3. Synthèse des Projections de Gains sur 4 Ans</h2>
+            <div id="results-summary" class="space-y-6 grid grid-cols-1 xl:grid-cols-2 gap-8">
+                <!-- Result Tables will be inserted here by JS -->
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-800 pt-8 border-t border-gray-300">4. Évolution du Parc Client (Clients Actifs Fin d'Année)</h2>
+            <div id="park-summary" class="space-y-6 grid grid-cols-1 xl:grid-cols-2 gap-8">
+                <!-- Park Tables will be inserted here by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Taux de TVA par défaut (utilisé pour convertir TTC en HT)
+        const TVA_RATE = 0.20; // 20%
+        const NB_YEARS = 4;
+        const MONTHS_PER_YEAR = 12;
+        const TOTAL_MONTHS = NB_YEARS * MONTHS_PER_YEAR;
+
+        // Structure de données complète avec les valeurs par défaut
+        let data = {
+            // Variables Globales
+            volumes: {
+                iPhones: 13497,
+                MacBook: 4674,
+                AirPods: 10662,
+                iPads: 4166, 
+                'Apple Watch': 2500 
+            },
+            // Variables Spécifiques aux Offres
+            offers: {
+                AS: {
+                    global: {
+                        profitSharing_A1: 0, // En €
+                        profitSharing_A2: 0,
+                        profitSharing_A3: 0,
+                        profitSharing_A4: 0,
+                        xforce_rate: 0.70, // Taux de pose du film
+                        xforce_revenue: 13, // Revenu unitaire X-Force (€ TTC)
+                        tax_rate: 0.20, // Taux Fiscal (TTC vers HT), par défaut 20%
+                    },
+                    iPhones: {
+                        monthly: {
+                            price_ttc: 15.99,
+                            margin_rate: 0.29,
+                            attachment_rate: 0.23,
+                            renunciation_rate: 0.19,
+                            churn_monthly: 0.04, // Taux de churn dès M13
+                            max_duration_months: 48, // Durée de vie maximale (4 ans)
+                            commitment_months: 12, // Engagement 12 mois (implique revenu dès M13)
+                        },
+                        prepaid_12m: {
+                            price_ttc: 199.99, 
+                            margin_rate: 0.29,
+                            attachment_rate: 0.05, 
+                            duration_months: 12, // Durée de l'offre
+                        }
+                    },
+                    MacBook: {
+                        monthly: {
+                            price_ttc: 15.99,
+                            margin_rate: 0.42,
+                            attachment_rate: 0.09,
+                            renunciation_rate: 0.17,
+                            churn_monthly: 0.04,
+                            max_duration_months: 48,
+                            commitment_months: 12, 
+                        },
+                        prepaid_12m: {
+                            price_ttc: 199.99,
+                            margin_rate: 0.42,
+                            attachment_rate: 0.03,
+                            duration_months: 12,
+                        }
+                    },
+                    AirPods: {
+                        monthly: {
+                            price_ttc: 4.99,
+                            margin_rate: 0.305,
+                            attachment_rate: 0.03,
+                            renunciation_rate: 0.08,
+                            churn_monthly: 0.04,
+                            max_duration_months: 48,
+                            commitment_months: 12,
+                        },
+                        prepaid_12m: {
+                            price_ttc: 59.99,
+                            margin_rate: 0.305,
+                            attachment_rate: 0.01,
+                            duration_months: 12,
+                        }
+                    },
+                    iPads: {
+                        monthly: {
+                            price_ttc: 8.99,
+                            margin_rate: 0.305,
+                            attachment_rate: 0.08,
+                            renunciation_rate: 0.08,
+                            churn_monthly: 0.04,
+                            max_duration_months: 48,
+                            commitment_months: 12,
+                        },
+                        prepaid_12m: {
+                            price_ttc: 99.99,
+                            margin_rate: 0.305,
+                            attachment_rate: 0.02,
+                            duration_months: 12,
+                        }
+                    },
+                    'Apple Watch': {
+                        monthly: {
+                            price_ttc: 4.99,
+                            margin_rate: 0.305,
+                            attachment_rate: 0.09,
+                            renunciation_rate: 0.08,
+                            churn_monthly: 0.04,
+                            max_duration_months: 48,
+                            commitment_months: 12,
+                        },
+                        prepaid_12m: {
+                            price_ttc: 59.99,
+                            margin_rate: 0.305,
+                            attachment_rate: 0.01,
+                            duration_months: 12,
+                        }
+                    },
+                },
+                AP: {
+                    global: {
+                        tax_rate: 0.20, // Taux Fiscal (TTC vers HT)
+                    },
+                    iPhones: {
+                        monthly: {
+                            price_ttc: 12.99, 
+                            margin_rate: 0.29,
+                            attachment_rate: 0.23,
+                            renunciation_rate: 0.19,
+                            churn_monthly: 0.04, // Taux de churn dès M13
+                            max_duration_months: 48,
+                            commitment_months: 0, // Mis à 0 pour "Sans engagement" (Revenu dès M1)
+                        },
+                        prepaid_24m: {
+                            price_ttc: 249.99, 
+                            margin_rate: 0.29,
+                            attachment_rate: 0.05,
+                            duration_months: 24, // Durée de l'offre
+                        }
+                    },
+                    MacBook: {
+                        prepaid_12m: {
+                            price_ttc: 199.99,
+                            margin_rate: 0.42,
+                            attachment_rate: 0.09,
+                            duration_months: 12,
+                        },
+                        prepaid_36m: {
+                            price_ttc: 499.99, 
+                            margin_rate: 0.42,
+                            attachment_rate: 0.03,
+                            duration_months: 36, 
+                        }
+                    },
+                    AirPods: {
+                        prepaid_24m: {
+                            price_ttc: 99.99,
+                            margin_rate: 0.305,
+                            attachment_rate: 0.03,
+                            duration_months: 24,
+                        }
+                    },
+                    iPads: {
+                        monthly: {
+                            price_ttc: 7.99, 
+                            margin_rate: 0.305,
+                            attachment_rate: 0.08,
+                            renunciation_rate: 0.08,
+                            churn_monthly: 0.04,
+                            max_duration_months: 48,
+                            commitment_months: 0, // Mis à 0 pour "Sans engagement"
+                        },
+                        prepaid_24m: {
+                            price_ttc: 149.99, 
+                            margin_rate: 0.305,
+                            attachment_rate: 0.02,
+                            duration_months: 24,
+                        }
+                    },
+                    'Apple Watch': {
+                        monthly: {
+                            price_ttc: 3.99, 
+                            margin_rate: 0.305,
+                            attachment_rate: 0.09,
+                            renunciation_rate: 0.08,
+                            churn_monthly: 0.04,
+                            max_duration_months: 48,
+                            commitment_months: 0, // Mis à 0 pour "Sans engagement"
+                        },
+                        prepaid_24m: {
+                            price_ttc: 89.99, 
+                            margin_rate: 0.305,
+                            attachment_rate: 0.01,
+                            duration_months: 24,
+                        }
+                    },
+                }
+            }
+        };
+
+        let activeOfferTab = 'AS'; // Track the currently active tab
+
+        // Fonction utilitaire pour lire la valeur d'un input, convertie en nombre
+        const getInputValue = (id, isRate = false, isInt = false) => {
+            const el = document.getElementById(id);
+            if (!el) return 0;
+            let val = el.value.replace(/[^0-9,.-]/g, '').replace(',', '.');
+            let num = parseFloat(val);
+            if (isNaN(num)) return 0;
+
+            if (isRate) {
+                // Si c'est un taux (%), on divise par 100
+                return num / 100;
+            }
+            if (isInt) {
+                return parseInt(num);
+            }
+            return num;
+        };
+        
+        // Fonction pour changer l'onglet actif
+        const switchTab = (offerType) => {
+            activeOfferTab = offerType;
+            // Mettre à jour les classes des boutons d'onglet
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                if (btn.textContent.includes(offerType)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            // Rendre le contenu de l'onglet
+            renderProductInputs();
+        };
+
+        // --- Fonctions de rendu HTML ---
+
+        // Rendre les inputs de volume global (commun)
+        const renderGlobalVolumes = () => {
+            const container = document.getElementById('global-volumes');
+            container.innerHTML = `
+                <div class="input-group col-span-5 mb-4 p-2 bg-gray-50 rounded-lg border-none">
+                    <label class="font-bold text-gray-700">Taux Fiscal (TTC vers HT)</label>
+                    <input type="number" step="0.01" min="0" id="global-tax-rate" value="${(data.offers.AS.global.tax_rate * 100).toFixed(2)}" oninput="updateData('AS', 'global', 'tax_rate', true); updateData('AP', 'global', 'tax_rate', true); calculateProjections();" class="text-right w-full font-bold bg-white" />
+                    <span class="text-right text-gray-500 ml-1">%</span>
+                </div>
+            `;
+            Object.keys(data.volumes).forEach(product => {
+                container.innerHTML += `
+                    <div class="input-group flex-col items-start p-2 bg-gray-50 rounded-lg border-none">
+                        <label for="volume-${product.replace(' ', '')}" class="font-semibold text-gray-800">${product}</label>
+                        <input type="number" step="1" min="0" id="volume-${product.replace(' ', '')}" value="${data.volumes[product]}"
+                               oninput="updateVolume('${product}', this.value); calculateProjections();" class="text-right w-full" />
+                        <span class="text-xs text-gray-500 mt-1">Volumes vendus / mois</span>
+                    </div>
+                `;
+            });
+        };
+
+        // Rendre un groupe d'inputs (Prix, Taux, Marge)
+        const renderInputGroup = (offerType, product, offerKey, label, dataKey, isRate = false, unit = '€', isInt = false) => {
+            let targetObject;
+            
+            // Logique pour cibler l'objet de données correct
+            if (offerKey === 'global') {
+                targetObject = data.offers[offerType].global;
+            } else {
+                targetObject = data.offers[offerType][product][offerKey];
+            }
+            
+            if (!targetObject) return '';
+
+            const currentVal = targetObject[dataKey];
+            const displayVal = isRate ? (currentVal * 100).toFixed(2) : currentVal.toFixed(isInt ? 0 : 2);
+            const inputId = `${offerType}-${product.replace(' ', '')}-${offerKey}-${dataKey}`;
+            const step = isRate ? '0.01' : (isInt ? '1' : '0.01');
+
+            return `
+                <div class="input-group">
+                    <label for="${inputId}" title="${label}">${label}</label>
+                    <input type="number" step="${step}" min="0" id="${inputId}" value="${displayVal}"
+                           oninput="updateData('${offerType}', '${product}', '${offerKey}', '${dataKey}', ${isRate}, ${isInt}, this.value); calculateProjections();">
+                    <span class="ml-1 text-xs text-gray-400 w-4">${unit === '%' ? '%' : (unit === '€' ? '€' : '')}</span>
+                </div>
+            `;
+        };
+
+        // Rendre la carte d'un produit
+        const renderProductCard = (product, offerType) => {
+            const productData = data.offers[offerType][product];
+            if (!productData) return '';
+
+            let html = `
+                <div class="bg-white p-4 rounded-xl shadow-sm space-y-4 border border-gray-200">
+                    <h3 class="text-lg font-bold text-gray-700">${product}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            `;
+
+            Object.entries(productData).forEach(([offerKey, offerDetails]) => {
+                const isMonthly = offerKey.includes('monthly');
+                const duration = offerDetails.duration_months || offerDetails.commitment_months || 0;
+                let title;
+                
+                // Mettre à jour le titre pour la proposition AP Mensuel (Sans engagement)
+                if (offerType === 'AP' && isMonthly) {
+                    title = 'Abonnement Mensuel (Sans engagement)';
+                } else if (isMonthly) {
+                    title = `Abonnement Mensuel (${duration} M)`;
+                } else {
+                    // Logique pour les prépayés
+                    if (offerType === 'AP' && product === 'MacBook') {
+                        if(offerKey.includes('12m')) title = 'Offre Prépayée (12 M)';
+                        else if(offerKey.includes('36m')) title = 'Offre Prépayée (36 M)';
+                        else title = `Offre Prépayée (${duration} M)`; // Fallback
+                    } else {
+                        title = `Offre Prépayée (${duration} M)`;
+                    }
+                }
+
+                html += `
+                    <div class="${isMonthly ? 'monthly-card' : 'prepaid-card'} p-3 rounded-lg bg-gray-50 shadow-inner">
+                        <h4 class="font-semibold text-sm ${isMonthly ? 'text-monthly' : 'text-prepaid'} mb-2 border-b border-gray-200 pb-1">${title}</h4>
+                `;
+
+                // Attachement
+                html += renderInputGroup(offerType, product, offerKey, 'Taux d’Attachement', 'attachment_rate', true, '%');
+
+                // Variables communes (Prix, Marge)
+                html += renderInputGroup(offerType, product, offerKey, isMonthly ? 'Prix TTC / Mois' : 'Prix TTC (Total)', 'price_ttc', false, '€');
+                html += renderInputGroup(offerType, product, offerKey, 'Taux de Marge', 'margin_rate', true, '%');
+
+                // Variables spécifiques (Mensuel)
+                if (isMonthly) {
+                    html += renderInputGroup(offerType, product, offerKey, 'Durée Max du Contrat (mois)', 'max_duration_months', false, 'M', true);
+                    html += renderInputGroup(offerType, product, offerKey, 'Taux Renonciation (60 jours)', 'renunciation_rate', true, '%');
+                    html += renderInputGroup(offerType, product, offerKey, 'Taux Churn Mensuel (dès M13)', 'churn_monthly', true, '%');
+
+                    // Spécifique iPhones AS (X-Force)
+                    if (offerType === 'AS' && product === 'iPhones') {
+                        html += `<div class="p-2 mt-2 border-t border-red-200 space-y-2">
+                            <h5 class="font-bold text-xs text-xforce">Revenus Complémentaires X-Force (M0)</h5>
+                            ${renderInputGroup(offerType, product, 'global', 'Taux de Pose du Film', 'xforce_rate', true, '%')}
+                            ${renderInputGroup(offerType, product, 'global', 'Revenu Unitaire (Film)', 'xforce_revenue', false, '€')}
+                        </div>`;
+                    }
+                }
+
+                html += `</div>`;
+            });
+
+            html += `</div></div>`;
+            return html;
+        };
+
+        // Rendre les sections d'input pour les produits
+        const renderProductInputs = () => {
+            const container = document.getElementById('product-inputs');
+            let html = '';
+            
+            // 1. Rendu des cartes de produits pour l'onglet actif
+            Object.keys(data.volumes).forEach(product => {
+                if (data.offers[activeOfferTab][product]) {
+                    html += renderProductCard(product, activeOfferTab);
+                }
+            });
+
+            // 2. Ajout du Profit Sharing (AS - Annuel) seulement si l'onglet AS est actif
+            if (activeOfferTab === 'AS') {
+                html += `
+                    <div class="mt-6 bg-white p-6 rounded-xl shadow-md border-t-4 border-f97316">
+                        <h3 class="text-lg font-bold text-gray-700 text-profit mb-4">PROPOSITION 1 (AS) - Profit Sharing Annuel</h3>
+                        <p class="text-sm text-gray-500 mb-4">Ces montants s'ajoutent aux gains totaux de l'année concernée.</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            ${[1, 2, 3, 4].map(y => `
+                                <div class="bg-gray-50 p-3 rounded-lg">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Année ${y}</h4>
+                                    ${renderInputGroup('AS', 'global', 'global', `Montant (€)`, `profitSharing_A${y}`, false, '€', false)}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            container.innerHTML = html;
+        };
+
+        // Rendre le tableau de synthèse des résultats
+        const renderResultsSummary = (offerType, results) => {
+            const offerName = offerType === 'AS' ? 'PROPOSITION 1 (AS)' : 'PROPOSITION 2 (AP)';
+            const colorClass = offerType === 'AS' ? 'text-blue-700' : 'text-green-700';
+            const borderColor = offerType === 'AS' ? 'border-blue-500' : 'border-green-500';
+            const bgColorClass = offerType === 'AS' ? 'bg-blue-50' : 'bg-green-50';
+
+            let html = `
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-8 ${borderColor}">
+                    <h3 class="text-xl font-bold mb-4 ${colorClass}">${offerName}</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="${bgColorClass}">
+                                <tr>
+                                    <th class="px-2 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenu</th>
+                                    ${Array.from({ length: NB_YEARS }, (_, i) => `<th class="px-2 py-1 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">A${i + 1}</th>`).join('')}
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-2 py-1 whitespace-nowrap text-xs text-monthly font-semibold">Total Précompte / Marge Mensuelle</td>
+                                    ${Array.from({ length: NB_YEARS }, (_, i) => `<td class="result-cell px-2 py-1 text-xs">${results[i].monthly.toLocaleString('fr-FR', { minimumFractionDigits: 0 })} €</td>`).join('')}
+                                </tr>
+                                <tr>
+                                    <td class="px-2 py-1 whitespace-nowrap text-xs text-prepaid font-semibold">Total Offres Prépayées</td>
+                                    ${Array.from({ length: NB_YEARS }, (_, i) => `<td class="result-cell px-2 py-1 text-xs">${results[i].prepaid.toLocaleString('fr-FR', { minimumFractionDigits: 0 })} €</td>`).join('')}
+                                </tr>
+                                ${offerType === 'AS' ? `
+                                <tr>
+                                    <td class="px-2 py-1 whitespace-nowrap text-xs text-xforce font-semibold">Total Revenus X-Force (iPhones)</td>
+                                    ${Array.from({ length: NB_YEARS }, (_, i) => `<td class="result-cell px-2 py-1 text-xs">${results[i].xforce.toLocaleString('fr-FR', { minimumFractionDigits: 0 })} €</td>`).join('')}
+                                </tr>
+                                <tr>
+                                    <td class="px-2 py-1 whitespace-nowrap text-xs text-profit font-semibold">Profit Sharing (Annuel)</td>
+                                    ${Array.from({ length: NB_YEARS }, (_, i) => `<td class="result-cell px-2 py-1 text-xs">${results[i].profitSharing.toLocaleString('fr-FR', { minimumFractionDigits: 0 })} €</td>`).join('')}
+                                </tr>
+                                ` : ''}
+                                <tr class="border-t-2 border-gray-400 font-extrabold">
+                                    <td class="px-2 py-1 whitespace-nowrap text-sm ${colorClass}">TOTAL ANNUEL</td>
+                                    ${Array.from({ length: NB_YEARS }, (_, i) => `<td class="result-cell px-2 py-1 text-sm ${colorClass}">${results[i].total.toLocaleString('fr-FR', { minimumFractionDigits: 0 })} €</td>`).join('')}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-4 p-3 ${bgColorClass} rounded-lg">
+                        <p class="text-sm font-bold ${colorClass}">Total sur 4 Ans : ${results.total_4_years.toLocaleString('fr-FR', { minimumFractionDigits: 0 })} €</p>
+                    </div>
+                </div>
+            `;
+            return html;
+        };
+
+        // Rendre le tableau de synthèse du Parc Client
+        const renderParkSummary = (offerType, parkResults) => {
+            const offerName = offerType === 'AS' ? 'PROPOSITION 1 (AS)' : 'PROPOSITION 2 (AP)';
+            const colorClass = offerType === 'AS' ? 'text-blue-700' : 'text-green-700';
+            const borderColor = offerType === 'AS' ? 'border-blue-500' : 'border-green-500';
+            const bgColorClass = offerType === 'AS' ? 'bg-blue-50' : 'bg-green-50';
+
+            // Utilisation d'un format sans décimales pour les clients (nombre entier)
+            const formatNumber = (num) => Math.round(num).toLocaleString('fr-FR', { minimumFractionDigits: 0 });
+
+            let html = `
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-8 ${borderColor}">
+                    <h3 class="text-xl font-bold mb-4 ${colorClass}">${offerName} - Parc Client</h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="${bgColorClass}">
+                                <tr>
+                                    <th class="px-2 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type d'Offre</th>
+                                    ${Array.from({ length: NB_YEARS }, (_, i) => `<th class="px-2 py-1 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Fin A${i + 1}</th>`).join('')}
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-2 py-1 whitespace-nowrap text-xs text-monthly font-semibold">Abonnement Mensuel (Park)</td>
+                                    ${parkResults.monthly.map(park => `<td class="result-cell px-2 py-1 text-xs">${formatNumber(park)}</td>`).join('')}
+                                </tr>
+                                <tr>
+                                    <td class="px-2 py-1 whitespace-nowrap text-xs text-prepaid font-semibold">Offre Prépayée (Park)</td>
+                                    ${parkResults.prepaid.map(park => `<td class="result-cell px-2 py-1 text-xs">${formatNumber(park)}</td>`).join('')}
+                                </tr>
+                                <tr class="border-t-2 border-gray-400 font-extrabold">
+                                    <td class="px-2 py-1 whitespace-nowrap text-sm ${colorClass}">TOTAL CLIENTS ACTIFS</td>
+                                    ${parkResults.monthly.map((m, i) => {
+                                        const total = m + parkResults.prepaid[i];
+                                        return `<td class="result-cell px-2 py-1 text-sm ${colorClass}">${formatNumber(total)}</td>`;
+                                    }).join('')}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2 p-2 rounded bg-gray-50">Note: Le nombre de clients actifs est calculé à la fin du mois M12, M24, M36 et M48, en tenant compte de la durée de vie du contrat et du churn.</p>
+                </div>
+            `;
+            return html;
+        };
+
+
+        // --- Fonctions de mise à jour des données ---
+
+        // Mise à jour des volumes globaux
+        const updateVolume = (product, value) => {
+            const num = parseFloat(value.replace(/[^0-9,.-]/g, '').replace(',', '.'));
+            data.volumes[product] = isNaN(num) ? 0 : num;
+        };
+
+        // Mise à jour des autres variables
+        const updateData = (offerType, product, offerKey, dataKey, isRate, isInt, value) => {
+            let num;
+            if (value !== undefined) {
+                num = parseFloat(value.replace(/[^0-9,.-]/g, '').replace(',', '.'));
+            } else {
+                num = getInputValue(`${offerType}-${product.replace(' ', '')}-${offerKey}-${dataKey}`, isRate, isInt);
+            }
+
+            if (isNaN(num)) num = 0;
+
+            if (dataKey.startsWith('profitSharing')) {
+                // Cas spécifique du Profit Sharing global
+                data.offers[offerType].global[dataKey] = num;
+            } else if (dataKey === 'xforce_rate' || dataKey === 'xforce_revenue' || dataKey === 'tax_rate') {
+                 // Cas spécifique X-Force et Taux Fiscal
+                data.offers[offerType].global[dataKey] = isRate ? num / 100 : num;
+            }
+            else {
+                // Cas standard
+                data.offers[offerType][product][offerKey][dataKey] = isRate ? num / 100 : num;
+            }
+        };
+
+
+        // --- Fonction de calcul principal ---
+
+        const calculateProjections = () => {
+            const results = { AS: [], AP: [] };
+            
+            // Park Snapshots [Y1, Y2, Y3, Y4] for end of M12, M24, M36, M48
+            const parkSnapshots = {
+                AS: { monthly: [0, 0, 0, 0], prepaid: [0, 0, 0, 0] },
+                AP: { monthly: [0, 0, 0, 0], prepaid: [0, 0, 0, 0] }
+            };
+
+            // Initialiser les résultats annuels
+            for (let i = 0; i < NB_YEARS; i++) {
+                results.AS.push({ monthly: 0, prepaid: 0, xforce: 0, profitSharing: 0, total: 0 });
+                results.AP.push({ monthly: 0, prepaid: 0, xforce: 0, profitSharing: 0, total: 0 });
+            }
+
+            const productKeys = Object.keys(data.volumes);
+
+            // Boucle sur les 48 mois (m = 0 à M47)
+            for (let m = 0; m < TOTAL_MONTHS; m++) {
+                const yearIndex = Math.floor(m / MONTHS_PER_YEAR); // 0, 1, 2, 3
+                const monthInYear = m % MONTHS_PER_YEAR; // 0 à 11
+
+                // Calcul du Profit Sharing (Annuel, ajouté une seule fois par an)
+                if (monthInYear === 0) {
+                    const ps_key = `profitSharing_A${yearIndex + 1}`;
+                    results.AS[yearIndex].profitSharing += data.offers.AS.global[ps_key] || 0;
+                }
+
+                productKeys.forEach(product => {
+                    const volumeMensuel = data.volumes[product];
+
+                    ['AS', 'AP'].forEach(offerType => {
+                        const offerData = data.offers[offerType];
+                        const taxRate = offerData.global.tax_rate;
+                        const productOfferData = offerData[product];
+                        if (!productOfferData) return; // Skip if product not offered by this partner
+
+                        Object.entries(productOfferData).forEach(([offerKey, offerDetails]) => {
+                            const isMonthly = offerKey.includes('monthly');
+                            const isPrepaid = offerKey.includes('prepaid');
+
+                            const attachmentRate = offerDetails.attachment_rate;
+                            const marginRate = offerDetails.margin_rate;
+                            const priceTTC = offerDetails.price_ttc;
+                            const salesVolume = volumeMensuel * attachmentRate; // Volume de vente en M0
+
+                            const priceHT = priceTTC / (1 + taxRate);
+                            const unitMargin = priceHT * marginRate;
+
+                            if (salesVolume === 0 || unitMargin === 0) return;
+
+                            // --------------------------------------------------------
+                            // A. Traitement des ventes en M0 (dans le mois en cours 'm')
+                            // --------------------------------------------------------
+
+                            if (isPrepaid) {
+                                // Offres Prépayées (AS et AP) : Marge versée en M0 (mois 'm')
+                                results[offerType][yearIndex].prepaid += salesVolume * unitMargin;
+                            } else if (isMonthly) {
+                                // Offres Mensuelles
+
+                                if (offerType === 'AS') {
+                                    // AS Mensuel : 12 mois de précompte en M0 (mois 'm')
+                                    const precompte = salesVolume * unitMargin * 12;
+                                    results.AS[yearIndex].monthly += precompte;
+
+                                    // Revenu X-Force (AS, iPhones, M0)
+                                    if (product === 'iPhones') {
+                                        const xforceRate = offerData.global.xforce_rate;
+                                        const xforceRevenue = offerData.global.xforce_revenue;
+                                        const revenueXForce = salesVolume * xforceRate * (xforceRevenue / (1 + taxRate));
+                                        results.AS[yearIndex].xforce += revenueXForce;
+                                    }
+
+                                    // Reprise de commission (Clawback) en M+2 (mois m+2)
+                                    const clawbackMonth = m + 2;
+                                    if (clawbackMonth < TOTAL_MONTHS) {
+                                        const clawbackYearIndex = Math.floor(clawbackMonth / MONTHS_PER_YEAR);
+                                        const renunciationRate = offerDetails.renunciation_rate;
+                                        const volumeClawback = salesVolume * Math.max(0, renunciationRate - 0.15);
+                                        const repriseAmount = volumeClawback * unitMargin * 12; // Reprise sur 12 mois
+                                        results.AS[clawbackYearIndex].monthly -= repriseAmount;
+                                    }
+                                }
+                                // AP Mensuel : Pas de précompte en M0
+                            }
+
+                            // --------------------------------------------------------
+                            // B. Traitement du parc client (pour les mois futurs)
+                            // --------------------------------------------------------
+
+                            if (isMonthly) {
+                                const renunciationRate = offerDetails.renunciation_rate;
+                                const churnRate = offerDetails.churn_monthly;
+                                const maxDuration = offerDetails.max_duration_months;
+                                let activeParkInitial = salesVolume; // Parc initial après la vente
+
+                                // Boucle sur les mois suivants la vente (m+1 à TOTAL_MONTHS-1) pour la marge
+                                for (let k = m + 1; k < TOTAL_MONTHS; k++) {
+                                    const parkYearIndex = Math.floor(k / MONTHS_PER_YEAR);
+                                    let activePark = activeParkInitial;
+
+                                    // 1. Durée de vie maximale : Si le mois de vie du contrat dépasse la durée max
+                                    if (k >= m + maxDuration) {
+                                        activePark = 0;
+                                    } else {
+                                        // 2. Décroissance du parc liée à la renonciation (M1)
+                                        if (k === m + 1) { 
+                                            activePark *= (1 - renunciationRate);
+                                        }
+
+                                        // 3. Décroissance du parc liée au Churn (dès M13)
+                                        if (k >= m + 13) {
+                                            const churnMonths = k - (m + 12);
+                                            activePark *= Math.pow((1 - churnRate), churnMonths);
+                                        }
+                                    }
+
+                                    // Application de la Marge Mensuelle
+                                    if (activePark > 0) {
+                                        if (offerType === 'AS') {
+                                            // AS: Revenu à partir de M13 uniquement
+                                            if (k >= m + 12) {
+                                                results.AS[parkYearIndex].monthly += activePark * unitMargin;
+                                            }
+                                        } else if (offerType === 'AP') {
+                                            // AP: Revenu à partir de M1 (Sans engagement)
+                                            results.AP[parkYearIndex].monthly += activePark * unitMargin;
+                                        }
+                                    }
+                                }
+                            }
+
+                            // --------------------------------------------------------
+                            // C. Suivi du Parc Client (Snapshots Fin d'Année)
+                            // --------------------------------------------------------
+                            
+                            // Check contribution to park snapshots Y1, Y2, Y3, Y4
+                            [1, 2, 3, 4].forEach(year => {
+                                const endMonth = year * 12; // M12, M24, M36, M48
+                                if (m < endMonth) {
+                                    const monthInContract = endMonth - m;
+
+                                    if (isMonthly) {
+                                        const renunciationRate = offerDetails.renunciation_rate;
+                                        const churnRate = offerDetails.churn_monthly;
+                                        const maxDuration = offerDetails.max_duration_months;
+
+                                        let park = salesVolume;
+
+                                        if (monthInContract >= maxDuration) {
+                                            park = 0;
+                                        } else {
+                                            // Renonciation (M1)
+                                            if (monthInContract >= 1) {
+                                                park *= (1 - renunciationRate); 
+                                            }
+
+                                            // Churn (dès M13)
+                                            const churnMonths = Math.max(0, monthInContract - 12);
+                                            if (churnMonths > 0) {
+                                                park *= Math.pow((1 - churnRate), churnMonths);
+                                            }
+                                        }
+
+                                        // Mise à jour du parc mensuel
+                                        parkSnapshots[offerType].monthly[year - 1] += park;
+
+                                    } else if (isPrepaid) {
+                                        const duration = offerDetails.duration_months;
+
+                                        // Prepaid is active if contract age < duration
+                                        if (monthInContract <= duration) {
+                                            // Mise à jour du parc prépayé
+                                            parkSnapshots[offerType].prepaid[year - 1] += salesVolume;
+                                        }
+                                    }
+                                }
+                            });
+
+                        });
+                    });
+                });
+            }
+
+            // Agrégation des totaux annuels et totaux 4 ans
+            ['AS', 'AP'].forEach(offerType => {
+                let total4Years = 0;
+                results[offerType].forEach(year => {
+                    // S'assurer que les valeurs sont traitées en tant que nombres et gèrent les NaN
+                    year.monthly = parseFloat(year.monthly.toFixed(2)) || 0;
+                    year.prepaid = parseFloat(year.prepaid.toFixed(2)) || 0;
+                    year.xforce = parseFloat(year.xforce.toFixed(2)) || 0;
+                    year.profitSharing = parseFloat(year.profitSharing.toFixed(2)) || 0;
+
+                    year.total = year.monthly + year.prepaid + year.xforce + year.profitSharing;
+                    total4Years += year.total;
+                });
+                results[offerType].total_4_years = total4Years;
+            });
+
+            // Affichage des résultats
+            document.getElementById('results-summary').innerHTML =
+                renderResultsSummary('AS', results.AS) +
+                renderResultsSummary('AP', results.AP);
+
+            // Affichage du parc client
+            document.getElementById('park-summary').innerHTML =
+                renderParkSummary('AS', parkSnapshots.AS) +
+                renderParkSummary('AP', parkSnapshots.AP);
+        };
+
+        // Fonction d'initialisation
+        const init = () => {
+            // S'assurer que les valeurs numériques initiales sont des nombres
+            Object.keys(data.volumes).forEach(product => {
+                data.volumes[product] = parseInt(data.volumes[product]);
+            });
+
+            // Rendre l'interface
+            renderGlobalVolumes();
+            // Lancer le rendu initial avec l'onglet AS
+            renderProductInputs();
+
+            // Lancer le premier calcul
+            calculateProjections();
+        };
+
+        // Lancer l'initialisation
+        window.onload = init;
+    </script>
+
+</body>
+</html>
